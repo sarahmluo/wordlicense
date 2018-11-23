@@ -1,1 +1,19 @@
 
+ion-content {
+    top: 30%;
+}
+
+.word-title {
+    color: var(--ion-color-primary);
+    font-size: 20pt;
+    margin-bottom: 50px;
+}
+
+.word-menu-button {
+    background-color: var(--ion-color-primary);
+    border: 0;
+    border-radius: 20px;
+    color: #fff;
+    padding: 10px;
+    width: 35%;
+}
