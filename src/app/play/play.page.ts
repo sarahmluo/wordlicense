@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-play',
@@ -6,10 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./play.page.scss'],
 })
 export class PlayPage implements OnInit {
-
-  constructor() { }
+  constructor(
+    private location: Location
+  ) { }
 
   ngOnInit() {
   }
 
+  /**
+   * Navigate to previous page.
+   */
+  public goBack(): void {
+    this.location.back();
+  }
 }
