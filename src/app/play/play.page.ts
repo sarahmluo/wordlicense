@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-play',
@@ -11,7 +11,10 @@ export class PlayPage implements OnInit {
     private location: Location
   ) { }
 
-  ngOnInit() {
+  /**
+   * On Init.
+   */
+  public ngOnInit(): void {
   }
 
   /**
