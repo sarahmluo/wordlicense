@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  foo = {
+    thing: 1,
+    thing2: 2,
+  };
 }
