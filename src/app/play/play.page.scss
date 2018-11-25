@@ -3,3 +3,8 @@
   position: relative;
   top: 0;
 }
+
+ion-button {
+  --padding-end: none;
+  --padding-start: none;
+}

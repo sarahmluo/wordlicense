@@ -1,5 +1,5 @@
-import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-play',
@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayPage implements OnInit {
   constructor(
-    private location: Location
+    private navCtrl: NavController
   ) { }
 
   /**
@@ -21,6 +21,6 @@ export class PlayPage implements OnInit {
    * Navigate to previous page.
    */
   public goBack(): void {
-    this.location.back();
+    this.navCtrl.navigateBack('/home');
   }
 }
