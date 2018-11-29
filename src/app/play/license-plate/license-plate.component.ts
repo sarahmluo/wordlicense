@@ -9,6 +9,11 @@ export class LicensePlateComponent implements OnInit {
   constructor() { }
 
   /**
+   * Flag indicating if the game has started.
+   */
+  public hasStarted: boolean = false;
+
+  /**
    * On Init.
    */
   public ngOnInit(): void {

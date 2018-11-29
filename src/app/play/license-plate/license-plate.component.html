@@ -1,11 +1,17 @@
 <div>
   <div class="word-license-header">
-    Stuff
+    <ion-button *ngIf="hasStarted" size="small" shape="round">Stop</ion-button>
+    <ion-button 
+      class="word-skip-button" 
+      size="small" 
+      shape="round" 
+      fill="outline">Skip</ion-button>
   </div>
   
   <div class="word-license-image">
     <!-- license plate image goes here -->
-    license plate
+    <img src="../../../assets/licensePlates/CA-1.png" />
+    <div class="word-license-text">ABD 123</div>
   </div>
 
   <div class="word-license-footer">

@@ -1,9 +1,20 @@
 .word-license-header {
+  position: relative;
+}
 
+.word-skip-button {
+  position: absolute;
+  right: 0;
 }
 
 .word-license-image {
-  
+  position: relative;
+  top: 50px;
+}
+
+.word-license-text {
+  position: absolute;
+  top: 0;
 }
 
 .word-license-footer {
