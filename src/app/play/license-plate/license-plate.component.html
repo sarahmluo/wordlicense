@@ -1,6 +1,7 @@
 <div>
   <div class="word-license-header">
     <ion-button *ngIf="hasStarted" size="small" shape="round">Stop</ion-button>
+    &nbsp;
     <ion-button 
       class="word-skip-button" 
       size="small" 
@@ -8,10 +9,8 @@
       fill="outline">Skip</ion-button>
   </div>
   
-  <div class="word-license-image">
-    <!-- license plate image goes here -->
-    <img src="../../../assets/licensePlates/CA-1.png" />
-    <div class="word-license-text">ABD 123</div>
+  <div #licensePlate class="word-license-image">
+    ABD 123
   </div>
 
   <div class="word-license-footer">
