@@ -1,12 +1,15 @@
-<ion-content padding>
-  <div class="word-header">
-    <ion-button
-      (click)="goBack()"
-      color="primary"
-      fill="outline"
-      size="small">
-      <ion-icon name="arrow-back"></ion-icon>
-    </ion-button>
-  </div>
+<ion-header>
+  <ion-toolbar>
+    <div class="word-back-icon">
+      <ion-icon 
+        color="primary" 
+        name="arrow-back" 
+        (click)="goBack()"
+        size="large"></ion-icon>
+    </div>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content padding>
+  <app-license-plate></app-license-plate>
 </ion-content>
