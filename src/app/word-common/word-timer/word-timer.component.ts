@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { WordTimerFill, WordTimerShape, WordTimerCss } from './types';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-word-timer',
@@ -47,6 +48,11 @@ export class WordTimerComponent implements OnInit {
   public timeRemaining: number;
 
   /**
+   * Display time.
+   */
+  public displayTime: string;
+
+  /**
    * CSS for the timer.
    */
   public css: WordTimerCss;
@@ -56,7 +62,9 @@ export class WordTimerComponent implements OnInit {
    */
   ngOnInit() {
     this.timeRemaining = this.startTime;
+    this.setDisplayTime(this.startTime);
     this.setCss();
+    this.runTimer();
   }
 
   /**
@@ -72,6 +80,36 @@ export class WordTimerComponent implements OnInit {
       'display': 'inline-block',
       'padding': '5px 10px' 
     }
+  }
+  
+  /**
+   * Set the display time.
+   * 
+   * @param time the time to display.
+   */
+  private setDisplayTime(time: number): void {
+    this.displayTime = moment().startOf('day').milliseconds(time).format('HH:mm:ss');
+  }
+
+  /**
+   * Run the timer.
+   */
+  private runTimer(): void {
+    setTimeout(
+      () => {
+        this.timeRemaining -= 1000;
+        this.setDisplayTime(this.timeRemaining);
+
+        if (this.timeRemaining <= 0) {
+          // raise event
+          console.log('Time\'s up!');
+        } 
+        else {
+          this.runTimer();
+        }
+      },
+      1000
+    )
   }
 
 }
