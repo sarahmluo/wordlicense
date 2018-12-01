@@ -4,14 +4,22 @@
 }
 
 .word-license-header {
+  content: " ";
   margin: auto;
   position: relative;
-  width: 365px;
+  width: 330px;
 }
 
 .word-skip-button {
   position: absolute;
   right: 0;
+}
+
+.word-start-message {
+  margin: auto;
+  padding-top: 10px;
+  text-align: center;
+  width: 300px;
 }
 
 .word-license-image {
@@ -25,10 +33,11 @@
   padding-top: 50px;
   position: relative;
   text-align: center;
-  top: 21px;
   width: 300px;
 }
 
 .word-license-footer {
-  
+  margin: auto;
+  padding-top: 10px;
+  width: 330px;
 }

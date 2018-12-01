@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-
+import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
-import { PlayPage } from './play.page';
+import { WordCommonModule } from '../word-common/word-common.module';
 import { LicensePlateComponent } from './license-plate/license-plate.component';
+import { PlayPage } from './play.page';
 
 const routes: Routes = [
   {
@@ -20,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    WordCommonModule
   ],
   declarations: [PlayPage, LicensePlateComponent]
 })

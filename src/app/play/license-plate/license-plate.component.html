@@ -1,19 +1,29 @@
 <div>
   <div class="word-license-header">
-    <ion-button *ngIf="hasStarted" size="small" shape="round">Stop</ion-button>
-    &nbsp;
+    <ion-button size="small" shape="round">Stop</ion-button>
     <ion-button 
       class="word-skip-button" 
       size="small" 
       shape="round" 
       fill="outline">Skip</ion-button>
   </div>
-  
-  <div #licensePlate class="word-license-image">
-    ABD 123
+
+  <div class="word-license-image">
+    <span *ngIf="hasStarted">ABD 123</span>
   </div>
 
-  <div class="word-license-footer">
-    More Stuff
+  <div *ngIf="!hasStarted" class="word-start-message">
+    Click the start button to begin!
+    <p>
+      <ion-button size="small" shape="round" color="primary" (click)="startGame()">Start</ion-button>
+    </p>
+  </div>
+
+  <div *ngIf="hasStarted" class="word-license-footer">
+    <app-word-timer
+      color="#3880ff"
+      fill="solid"
+      shape="round"
+      startTime="20000"></app-word-timer>
   </div>
 </div>

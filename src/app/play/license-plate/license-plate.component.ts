@@ -28,27 +28,13 @@ export class LicensePlateComponent implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
-    this.calculateImageCss();
   }
 
   /**
-   * Calculate dynamic css properties for the license image div.
+   * Start the game.
    */
-  private calculateImageCss(): void {
-    let minHeight: string;
-    let paddingTop: string;
-    console.log(this.imageDiv);
-    const width: number = window.innerWidth;
-    console.log('width: ' + width);
-    // todo: move hardcoded values to a service
-    const height: number = Math.round((width * 300) / 600);
-
-    this.imageCss = {
-      height: height + 'px',
-      'font-size': Math.round(height/10) + 'px', 
-    }
-
-    console.log(minHeight);
+  public startGame(): void {
+    this.hasStarted = true;
   }
 
 }
