@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-
-import { WordTimerFill, WordTimerShape, WordTimerCss } from './types';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as moment from 'moment';
+
+import { WordTimerCss, WordTimerFill, WordTimerShape } from './types';
 
 @Component({
   selector: 'app-word-timer',
@@ -43,6 +43,12 @@ export class WordTimerComponent implements OnInit {
   public startTime: number = 5000;
 
   /**
+   * Event emitted when timer finishes.
+   */
+  @Output()
+  public timesUp: EventEmitter<void> = new EventEmitter();
+
+  /**
    * Time remaining in milliseconds.
    */
   public timeRemaining: number;
@@ -57,14 +63,44 @@ export class WordTimerComponent implements OnInit {
    */
   public css: WordTimerCss;
 
+  public timer: any;
+
   /**
    * On Init.
    */
   ngOnInit() {
-    this.timeRemaining = this.startTime;
-    this.setDisplayTime(this.startTime);
     this.setCss();
+    this.resetTimer();
+  }
+
+  /**
+   * Reset the timer.
+   */
+  public resetTimer() {
+    clearTimeout(this.timer);
+    this.timeRemaining = this.startTime;
+    this.setDisplayTime(this.timeRemaining);
     this.runTimer();
+  }
+
+  /**
+   * Run the timer.
+   */
+  private runTimer(): void {
+    this.timer = setTimeout(
+      () => {
+        this.timeRemaining -= 1000;
+        this.setDisplayTime(this.timeRemaining);
+
+        if (this.timeRemaining <= 0) {
+          this.timesUp.emit();
+        } 
+        else {
+          this.runTimer();
+        }
+      },
+      1000
+    )
   }
 
   /**
@@ -90,26 +126,4 @@ export class WordTimerComponent implements OnInit {
   private setDisplayTime(time: number): void {
     this.displayTime = moment().startOf('day').milliseconds(time).format('HH:mm:ss');
   }
-
-  /**
-   * Run the timer.
-   */
-  private runTimer(): void {
-    setTimeout(
-      () => {
-        this.timeRemaining -= 1000;
-        this.setDisplayTime(this.timeRemaining);
-
-        if (this.timeRemaining <= 0) {
-          // raise event
-          console.log('Time\'s up!');
-        } 
-        else {
-          this.runTimer();
-        }
-      },
-      1000
-    )
-  }
-
 }

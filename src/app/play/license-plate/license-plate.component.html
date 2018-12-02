@@ -5,11 +5,12 @@
       class="word-skip-button" 
       size="small" 
       shape="round" 
-      fill="outline">Skip</ion-button>
+      fill="outline"
+      (click)="getNewLicenseDisplay()">Skip</ion-button>
   </div>
 
   <div class="word-license-image">
-    <span *ngIf="hasStarted">ABD 123</span>
+    <span *ngIf="hasStarted">{{letters[currentIndex]}} {{licenseNumber}}</span>
   </div>
 
   <div *ngIf="!hasStarted" class="word-start-message">
@@ -24,6 +25,7 @@
       color="#3880ff"
       fill="solid"
       shape="round"
-      startTime="20000"></app-word-timer>
+      startTime="20000"
+      (timesUp)="getNewLicenseDisplay()"></app-word-timer>
   </div>
 </div>
