@@ -34,11 +34,6 @@ export class LicensePlateComponent implements OnInit {
   public letters: string[] = this.letter.letters;
 
   /**
-   * Array of used indices of the letters array.
-   */
-  public usedIndices: number[] = [];
-
-  /**
    * Index of current letter combination.
    */
   public currentIndex: number;
@@ -81,14 +76,11 @@ export class LicensePlateComponent implements OnInit {
    */
   private getNewLetters(): void {
     let index: number;
-    let used: boolean;
 
     do {
       index = Math.floor(Math.random() * this.numLetters);
-      used = this.usedIndices.find(x => x === index) ? true : false;
-    } while (used)
+    } while (index === this.currentIndex)
 
-    this.usedIndices.push(index)
     this.currentIndex = index;
   }
 
