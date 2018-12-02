@@ -41,7 +41,7 @@ export class LicensePlateComponent implements OnInit {
   /**
    * Random three digit number for license plate display.
    */
-  public licenseNumber: number;
+  public licenseNumber: string;
 
   /**
    * Number of available letter combinations.
@@ -52,7 +52,6 @@ export class LicensePlateComponent implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
-    this.getNewLicenseDisplay();
   }
 
   /**
@@ -60,6 +59,7 @@ export class LicensePlateComponent implements OnInit {
    */
   public startGame(): void {
     this.hasStarted = true;
+    this.getNewLicenseDisplay();
   }
 
   /**
@@ -68,7 +68,9 @@ export class LicensePlateComponent implements OnInit {
   public getNewLicenseDisplay(): void {
     this.getNewLetters();
     this.getNewLicenseNumber();
-    this.timer.resetTimer();
+    if (this.timer) {
+      this.timer.resetTimer();
+    }
   }
 
   /**
@@ -89,6 +91,6 @@ export class LicensePlateComponent implements OnInit {
    */
   private getNewLicenseNumber(): void {
     let num: number = Math.floor(Math.random() * 1000);
-    this.licenseNumber = num <= 99 ? Number(('00' + num).slice(-3)) : num;
+    this.licenseNumber = num <= 99 ? ('00' + num).slice(-3) : num.toString();
   }
 }
