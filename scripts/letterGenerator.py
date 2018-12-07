@@ -23,7 +23,7 @@ def writeLetterCombos():
     # use os.path to generate the filepath
     data_folder = os.path.join("..", "src", "assets", "words")
     
-    file_to_open = os.path.join(data_folder, "test.json")
+    file_to_open = os.path.join(data_folder, "words.json")
     
     f = open(file_to_open)
     
@@ -33,7 +33,18 @@ def writeLetterCombos():
     alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 
         'l', 'm', 'n', 'o', 'p',
         'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    #alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
     letters = []
+    
+    # prepare resulting json file
+    file_to_create = os.path.join(data_folder, "letters.json")
+    
+    if os.path.exists(file_to_create):
+        os.remove(file_to_create)
+    
+    g = open(file_to_create, "a")
+    g.write("{")
+    
     
     # loop through each three-letter combination
     # for each one, test a regular expression against 
@@ -48,7 +59,10 @@ def writeLetterCombos():
                 for key in data.keys():
                     if(reObj.match(key)):
                         letters.append(x + y + z)
-                
-    print(letters)    
+                        g.write("\"" + x + y + z + "\": 1,")
+                        break
+    
+    g.write("}")
+    print(len(letters))    
     
 writeLetterCombos()
