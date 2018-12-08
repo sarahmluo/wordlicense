@@ -28,4 +28,11 @@
       startTime="20000"
       (timesUp)="getNewLicenseDisplay()"></app-word-timer>
   </div>
+
+  <div *ngIf="hasStarted" class="word-input-container">
+    <form #form="ngForm" (ngSubmit)="onWordSubmit()">
+      <input [(ngModel)]="wordInput" type="text" id="wordInput" name="wordInput" class="word-input"/>
+      <ion-button type="submit" size="small" shape="round" color="primary">Go</ion-button>
+    </form>
+  </div>
 </div>

@@ -28,7 +28,6 @@ export class DictionaryService {
    * Load dictionary into memory.
    */
   public loadDictionary(): Promise<void> {
-    console.log('loading dictionary via http');
     return this.http.get('../assets/words/words.json')
       .toPromise()
       .then((res: WordDictionary) => {

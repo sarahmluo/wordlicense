@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { LettersService } from 'src/app/letters.service';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 
@@ -9,7 +10,8 @@ import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.co
 })
 export class LicensePlateComponent implements OnInit {
   constructor(
-    private letter: LettersService
+    private letter: LettersService,
+    private toast: ToastController
   ) { }
 
   /**
@@ -31,7 +33,7 @@ export class LicensePlateComponent implements OnInit {
   /**
    * Array of three-letter combinations.
    */
-  public letters: string[] = this.letter.letters;
+  public letters: string[];
 
   /**
    * Index of current letter combination.
@@ -44,14 +46,22 @@ export class LicensePlateComponent implements OnInit {
   public licenseNumber: string;
 
   /**
+   * User word input.
+   */
+  public wordInput: string;
+
+  /**
    * Number of available letter combinations.
    */
-  private numLetters: number = this.letter.letters.length;
+  private numLetters: number;
 
   /**
    * On Init.
    */
   public ngOnInit(): void {
+    this.letters = this.letter.letters;
+    this.numLetters = this.letters.length;
+    this.currentIndex = Math.floor(Math.random() * this.numLetters);
   }
 
   /**
@@ -70,6 +80,27 @@ export class LicensePlateComponent implements OnInit {
     this.getNewLicenseNumber();
     if (this.timer) {
       this.timer.resetTimer();
+    }
+  }
+
+  /**
+   * Process word submission.
+   */
+  public async onWordSubmit(): Promise<any> {
+    // check if word satsifies regular expression.
+    const letter1: string = this.letters[this.currentIndex][0];
+    const letter2: string = this.letters[this.currentIndex][1];
+    const letter3: string = this.letters[this.currentIndex][2];
+
+    const regExp: RegExp = new RegExp('^([a-z])*' + letter1 + '([a-z])*' + letter2 + '([a-z])*' + letter3 + '([a-z])*$');
+    if (!regExp.test(this.wordInput)) {
+      const tst: HTMLIonToastElement = await this.toast.create({
+        message: 'That word doesn\'t match the given letters!',
+        duration: 2000,
+        position: 'top'
+      });
+
+      return tst.present();
     }
   }
 

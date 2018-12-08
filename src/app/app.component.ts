@@ -4,6 +4,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
 
 import { DictionaryService } from './dictionary.service';
+import { LettersService } from './letters.service';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ import { DictionaryService } from './dictionary.service';
 export class AppComponent {
   constructor(
     private dictionary: DictionaryService,
+    private letters: LettersService,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
@@ -24,8 +26,11 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      // Load dictionary
-      return this.dictionary.loadDictionary();
+      // Load dictionary and letters
+      return this.dictionary.loadDictionary()
+        .then(() => {
+          return this.letters.loadLetterList();
+        });
     })
     .catch(err => {
       console.log(err);
