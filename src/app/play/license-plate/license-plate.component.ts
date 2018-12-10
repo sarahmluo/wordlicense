@@ -53,6 +53,16 @@ export class LicensePlateComponent implements OnInit {
   public wordInput: string;
 
   /**
+   * Number of attempts given to user.
+   */
+  public attempts: number;
+
+  /**
+   * Number of successful submissions.
+   */
+  public successes: number;
+
+  /**
    * Number of available letter combinations.
    */
   private numLetters: number;
@@ -63,6 +73,8 @@ export class LicensePlateComponent implements OnInit {
   public ngOnInit(): void {
     this.letters = this.letter.letters;
     this.numLetters = this.letters.length;
+    this.attempts = 0;
+    this.successes = 0;
     this.currentIndex = Math.floor(Math.random() * this.numLetters);
   }
 
@@ -117,7 +129,8 @@ export class LicensePlateComponent implements OnInit {
     }
 
     // Passed checks update score.
-
+    this.successes++;
+    this.getNewLicenseDisplay();
   }
 
   /**
@@ -131,6 +144,7 @@ export class LicensePlateComponent implements OnInit {
     } while (index === this.currentIndex)
 
     this.currentIndex = index;
+    this.attempts++;
   }
 
   /**

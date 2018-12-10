@@ -27,6 +27,14 @@
       shape="round"
       startTime="20000"
       (timesUp)="getNewLicenseDisplay()"></app-word-timer>
+
+      <ion-button
+        class="word-skip-button"
+        shape="round"
+        size="small"
+        fill="outline">
+        Score: {{successes}}/{{attempts}}
+      </ion-button>
   </div>
 
   <div *ngIf="hasStarted" class="word-input-container">
