@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { DictionaryService } from 'src/app/dictionary.service';
 import { LettersService } from 'src/app/letters.service';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 
@@ -10,6 +11,7 @@ import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.co
 })
 export class LicensePlateComponent implements OnInit {
   constructor(
+    private dictionary: DictionaryService,
     private letter: LettersService,
     private toast: ToastController
   ) { }
@@ -93,7 +95,7 @@ export class LicensePlateComponent implements OnInit {
     const letter3: string = this.letters[this.currentIndex][2];
 
     const regExp: RegExp = new RegExp('^([a-z])*' + letter1 + '([a-z])*' + letter2 + '([a-z])*' + letter3 + '([a-z])*$');
-    if (!regExp.test(this.wordInput)) {
+    if (!regExp.test(this.wordInput.toLowerCase())) {
       const tst: HTMLIonToastElement = await this.toast.create({
         message: 'That word doesn\'t match the given letters!',
         duration: 2000,
@@ -102,6 +104,20 @@ export class LicensePlateComponent implements OnInit {
 
       return tst.present();
     }
+
+    // check if word is in dictionary.
+    if (!this.dictionary.dictionary.has(this.wordInput.toLowerCase())) {
+      const tst: HTMLIonToastElement = await this.toast.create({
+        message: 'That word is not in the dictionary!',
+        duration: 2000,
+        position: 'top'
+      });
+  
+      return tst.present();
+    }
+
+    // Passed checks update score.
+
   }
 
   /**
