@@ -6,7 +6,7 @@
       size="small" 
       shape="round" 
       fill="outline"
-      (click)="getNewLicenseDisplay()">Skip</ion-button>
+      (click)="skip()">Skip</ion-button>
   </div>
 
   <div class="word-license-image">
@@ -26,7 +26,7 @@
       fill="solid"
       shape="round"
       startTime="20000"
-      (timesUp)="getNewLicenseDisplay()"></app-word-timer>
+      (timesUp)="skip()"></app-word-timer>
 
       <ion-button
         class="word-skip-button"

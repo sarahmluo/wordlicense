@@ -1,17 +1,42 @@
+@font-face {
+    font-family: LicensePlate;
+    src: url(../../fonts/LicensePlate.ttf);
+}
 
-ion-content {
+/* :host {
+    ion-content {
+        --background: url('../../assets/bg.png') repeat 100% 100%;
+      
+        // colored overlay
+        &::before {
+          background-color: fade-out(#fff, .6);
+          bottom: 0;
+          content: '';
+          display: block;
+          left: 0;
+          position: absolute;
+          right: 0;
+          top: 0;
+        }
+    }
+}  */
+
+.word-menu-container {
+    position: relative;
     top: 20%;
 }
 
 .word-title {
     color: var(--ion-color-primary);
-    font-size: 20pt;
+    font-family: LicensePlate;
+    font-size: 4em;
     margin-bottom: 50px;
 }
 
 .word-menu-button {
     margin: auto;
     width: 50%;
+    position: relative;
 
     ion-button {
         margin-bottom: 10px;

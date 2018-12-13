@@ -71,11 +71,6 @@ export class LicensePlateComponent implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
-    this.letters = this.letter.letters;
-    this.numLetters = this.letters.length;
-    this.attempts = 0;
-    this.successes = 0;
-    this.currentIndex = Math.floor(Math.random() * this.numLetters);
   }
 
   /**
@@ -83,6 +78,11 @@ export class LicensePlateComponent implements OnInit {
    */
   public startGame(): void {
     this.hasStarted = true;
+    this.letters = this.letter.letters;
+    this.numLetters = this.letters.length;
+    this.attempts = 0;
+    this.successes = 0;
+    this.currentIndex = Math.floor(Math.random() * this.numLetters);
     this.getNewLicenseDisplay();
   }
 
@@ -95,6 +95,15 @@ export class LicensePlateComponent implements OnInit {
     if (this.timer) {
       this.timer.resetTimer();
     }
+  }
+
+  /**
+   * Skip the current set of letters.
+   */
+  public skip(): void {
+    this.attempts++;
+    this.wordInput = '';
+    this.getNewLicenseDisplay();
   }
 
   /**
@@ -130,6 +139,8 @@ export class LicensePlateComponent implements OnInit {
 
     // Passed checks update score.
     this.successes++;
+    this.attempts++;
+    this.wordInput = '';
     this.getNewLicenseDisplay();
   }
 
@@ -144,7 +155,6 @@ export class LicensePlateComponent implements OnInit {
     } while (index === this.currentIndex)
 
     this.currentIndex = index;
-    this.attempts++;
   }
 
   /**
