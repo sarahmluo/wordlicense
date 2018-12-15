@@ -107,6 +107,14 @@ export class LicensePlateComponent implements OnInit {
   }
 
   /**
+   * Stop the game.
+   */
+  public stop(): void {
+    this.hasStarted = false;
+    this.reset();
+  }
+
+  /**
    * Process word submission.
    */
   public async onWordSubmit(): Promise<any> {
@@ -120,7 +128,8 @@ export class LicensePlateComponent implements OnInit {
       const tst: HTMLIonToastElement = await this.toast.create({
         message: 'That word doesn\'t match the given letters!',
         duration: 2000,
-        position: 'top'
+        position: 'top',
+        showCloseButton: true
       });
 
       return tst.present();
@@ -142,6 +151,16 @@ export class LicensePlateComponent implements OnInit {
     this.attempts++;
     this.wordInput = '';
     this.getNewLicenseDisplay();
+  }
+
+  /**
+   * Reset runtime variables.
+   */
+  private reset(): void {
+    this.attempts = 0;
+    this.successes = 0;
+    this.wordInput = '';
+    this.timer.resetTimer();
   }
 
   /**
