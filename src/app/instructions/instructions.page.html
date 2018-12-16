@@ -1,45 +1,66 @@
 <ion-header>
     <ion-toolbar>
-      <div class="word-back-icon">
+      <div slot="start">
         <ion-icon 
           color="primary" 
           name="arrow-back" 
           (click)="goBack()"
           size="large"></ion-icon>
       </div>
+      <ion-title>Instructions</ion-title>
     </ion-toolbar>
   </ion-header>
   
   <ion-content padding>
-    <p class="word-info-text">
-      <ion-icon color="primary" name="play"></ion-icon>
-      To play Word License, select the "Play" option from the home page and then click 
-      the "Start" button.
-    </p>
-    <p class="word-info-text">
-      <ion-icon color="primary" name="information-circle"></ion-icon>
-      The concept behind Word License is fairly simple. You are given a license plate 
-      with three letters and three numbers. The numbers are there to just to complete 
-      the image of a license plate. What you need to pay attention to are the letters.
-    </p>
-    <p class="word-info-text">
-      <ion-icon color="primary" name="flag"></ion-icon>
-      The goal for each set of three letters is to find a word in the dictionary that 
-      contains those three letters in the given order. The letters do not have to appear 
-      in the word consecutively.
-    </p>
-    <p class="word-info-text">
-      <ion-icon color="primary" name="bulb"></ion-icon>
-      For example, given the letters 'LEC', possible words include, but are not limited to
-      "leach", "lecture", and "electric". Note that the word does not have to begin with the 
-      first letter in the given set of three.
-    </p>
-    <p class="word-info-text">
-        <ion-icon color="primary" name="alert"></ion-icon>
-      The set of three-letter combinations was generated from a third-party dictionary. What 
-      this means is that every set of letters correpsonds to at least one word in the dictionary. 
-      Since the dictionary may contain obscure, little-known words, you may come across some 
-      seemingly impossible letter combinations. Feel free to skip these ones, otherwise you 
-      can consider them a challenge!
-    </p>
+    <div class="word-info-text">
+      <div>
+        <ion-icon color="primary" name="play" size="large"></ion-icon>
+      </div>
+      <div class="word-info-child">
+        To play Word License, select the "Play" option from the home page and then click 
+        the "Start" button.
+      </div>
+    </div>
+    <div class="word-info-text">
+      <div>
+        <ion-icon color="primary" name="information-circle" size="large"></ion-icon>
+      </div>
+      <div class="word-info-child">
+        The concept behind Word License is fairly simple. You are given a license plate 
+        with three letters and three numbers. The numbers are there to just to complete 
+        the image of a license plate. What you need to pay attention to are the letters.
+      </div>
+    </div>
+    <div class="word-info-text">
+      <div>
+        <ion-icon color="primary" name="flag" size="large"></ion-icon>
+      </div>
+      <div class="word-info-child">
+        The goal for each set of three letters is to find a word in the dictionary that 
+        contains those three letters in the given order. The letters do not have to appear 
+        in the word consecutively.
+      </div>
+    </div>
+    <div class="word-info-text">
+      <div>
+        <ion-icon color="primary" name="bulb" size="large"></ion-icon>
+      </div>
+      <div class="word-info-child">
+        For example, given the letters 'LEC', possible words include, but are not limited to
+        "leach", "lecture", and "electric". Note that the word does not have to begin with the 
+        first letter in the given set of three.
+      </div>
+    </div>
+    <div class="word-info-text">
+      <div>
+        <ion-icon color="primary" name="alert" size="large"></ion-icon> 
+      </div>
+      <div class="word-info-child">
+        The set of three-letter combinations was generated from a third-party dictionary. What 
+        this means is that every set of letters correpsonds to at least one word in the dictionary. 
+        Since the dictionary may contain obscure, little-known words, you may come across some 
+        seemingly impossible letter combinations. Feel free to skip these ones, otherwise you 
+        can consider them a challenge!
+      </div>
+    </div>
   </ion-content>

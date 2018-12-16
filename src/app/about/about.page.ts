@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { AppVersion } from '@ionic-native/app-version';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'app-about',
@@ -22,7 +22,7 @@ export class AboutPage implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
-   // this.hydrateAppVersion(); 
+    this.hydrateAppVersion(); 
   }
 
   /**
