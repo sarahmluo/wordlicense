@@ -1,7 +1,7 @@
 /**
- * Format of dictionary when read in as JSON 
+ * Format of dictionary when read in as JSON
  * from the file system.
  */
 export interface WordDictionary {
-  [key: string]: 1
+  [key: string]: 1;
 }

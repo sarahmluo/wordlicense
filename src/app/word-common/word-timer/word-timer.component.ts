@@ -94,13 +94,12 @@ export class WordTimerComponent implements OnInit {
 
         if (this.timeRemaining <= 0) {
           this.timesUp.emit();
-        } 
-        else {
+        } else {
           this.runTimer();
         }
       },
       1000
-    )
+    );
   }
 
   /**
@@ -114,13 +113,13 @@ export class WordTimerComponent implements OnInit {
       'border-radius': this.shape === 'full' ? '0px' : '50px',
       'color': this.fill === 'solid' ? '#fff' : this.color,
       'display': 'inline-block',
-      'padding': '5px 10px' 
-    }
+      'padding': '5px 10px'
+    };
   }
-  
+
   /**
    * Set the display time.
-   * 
+   *
    * @param time the time to display.
    */
   private setDisplayTime(time: number): void {

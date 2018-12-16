@@ -4,7 +4,7 @@ import { NavController } from '@ionic/angular';
 @Component({
   selector: 'app-play',
   templateUrl: './play.page.html',
-  styleUrls: ['./play.page.scss'],
+  styleUrls: ['./play.page.scss']
 })
 export class PlayPage implements OnInit {
   constructor(

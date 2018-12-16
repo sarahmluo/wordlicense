@@ -33,8 +33,8 @@ export class DictionaryService {
       .then((res: WordDictionary) => {
         this._dictionary = new Set(Object.keys(res));
       });
-    
-    // as of 12/5/2018, cannot debug File plugin on 
+
+    // as of 12/5/2018, cannot debug File plugin on
     // device bc sourcemaps are not loaded in Ionic 4
     // for Android. So for now, using http as above.
     /* console.log('loading dictinary file');

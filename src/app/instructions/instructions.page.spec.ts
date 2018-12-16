@@ -10,7 +10,7 @@ describe('InstructionsPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ InstructionsPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));

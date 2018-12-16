@@ -142,7 +142,7 @@ export class LicensePlateComponent implements OnInit {
         duration: 2000,
         position: 'top'
       });
-  
+
       return tst.present();
     }
 
@@ -171,7 +171,7 @@ export class LicensePlateComponent implements OnInit {
 
     do {
       index = Math.floor(Math.random() * this.numLetters);
-    } while (index === this.currentIndex)
+    } while (index === this.currentIndex);
 
     this.currentIndex = index;
   }
@@ -180,7 +180,7 @@ export class LicensePlateComponent implements OnInit {
    * Get a new license number.
    */
   private getNewLicenseNumber(): void {
-    let num: number = Math.floor(Math.random() * 1000);
+    const num: number = Math.floor(Math.random() * 1000);
     this.licenseNumber = num <= 99 ? ('00' + num).slice(-3) : num.toString();
   }
 }

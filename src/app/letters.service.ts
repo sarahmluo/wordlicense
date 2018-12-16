@@ -12,7 +12,7 @@ export class LettersService {
   ) { }
 
   /**
-   * List of letter strings to be used in the 
+   * List of letter strings to be used in the
    * license plate game.
    */
   private _letters: string[];

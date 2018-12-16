@@ -10,7 +10,7 @@ describe('PlayPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PlayPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
