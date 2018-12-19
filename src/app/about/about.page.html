@@ -1,33 +1,32 @@
 <ion-header>
-    <ion-toolbar>
-      <div slot="start">
-        <ion-icon 
-          color="primary" 
-          name="arrow-back" 
-          (click)="goBack()"
-          size="large"></ion-icon>
-      </div>
-      <ion-title>About</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content padding>
-    <div class="word-info-text">
-      <div>
-        <ion-icon color="primary" name="car" size="large"></ion-icon>
-      </div>
-      <div class="word-info-child">
-        Word License is a word-finding game based on license plates. It was inspired 
-        by a time in the author's life where she spent a lot of time every day 
-        driving around in a car.
-      </div>
+  <ion-toolbar>
+    <div slot="start">
+      <ion-icon 
+        color="primary" 
+        name="arrow-back" 
+        (click)="goBack()"
+        size="large"></ion-icon>
     </div>
-    <div class="word-info-text">
-      <div>
-        <ion-icon color="primary" name="information-circle" size="large"></ion-icon>
-      </div>
-      <div class="word-info-child">
+    <ion-title>About</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-item>
+      <ion-icon color="primary" name="car" class="word-card-icon"></ion-icon>
+      <ion-label>The 411</ion-label>
+    </ion-item>
+
+    <ion-card-content>
+      Word License is a word-finding game based on license plates. It was inspired 
+      by a time in the author's life where she spent a lot of time every day 
+      driving around in a car.
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
         Current version: {{appVersion}}
-      </div>
-    </div>
-  </ion-content>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

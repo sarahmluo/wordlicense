@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { DictionaryService } from 'src/app/dictionary.service';
 import { LettersService } from 'src/app/letters.service';
@@ -17,10 +17,16 @@ export class LicensePlateComponent implements OnInit {
   ) { }
 
   /**
-   * Image div.
+   * Timer component.
    */
   @ViewChild(WordTimerComponent)
   public timer: WordTimerComponent;
+
+  /**
+   * License Image.
+   */
+  @ViewChild('licenseImage')
+  public licenseImage: ElementRef;
 
   /**
    * Flag indicating if the game has started.
@@ -71,6 +77,7 @@ export class LicensePlateComponent implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
+    this.licenseImage.nativeElement.style.backgroundImage = "url(../../../assets/licensePlates/1.png)";
   }
 
   /**
@@ -90,6 +97,8 @@ export class LicensePlateComponent implements OnInit {
    * Get a new license display.
    */
   public getNewLicenseDisplay(): void {
+    const num: number = Math.ceil(Math.random() * 3);
+    this.licenseImage.nativeElement.style.backgroundImage = `url(../../../assets/licensePlates/${num}.png`;
     this.getNewLetters();
     this.getNewLicenseNumber();
     if (this.timer) {
@@ -140,7 +149,8 @@ export class LicensePlateComponent implements OnInit {
       const tst: HTMLIonToastElement = await this.toast.create({
         message: 'That word is not in the dictionary!',
         duration: 2000,
-        position: 'top'
+        position: 'top',
+        showCloseButton: true
       });
 
       return tst.present();
