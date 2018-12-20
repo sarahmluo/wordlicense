@@ -74,6 +74,11 @@ export class LicensePlateComponent implements OnInit {
   private numLetters: number;
 
   /**
+   * Number of license plate images.
+   */
+  private numLicensePlates: number = 15;
+
+  /**
    * On Init.
    */
   public ngOnInit(): void {
@@ -97,7 +102,7 @@ export class LicensePlateComponent implements OnInit {
    * Get a new license display.
    */
   public getNewLicenseDisplay(): void {
-    const num: number = Math.ceil(Math.random() * 3);
+    const num: number = Math.ceil(Math.random() * this.numLicensePlates);
     this.licenseImage.nativeElement.style.backgroundImage = `url(../../../assets/licensePlates/${num}.png`;
     this.getNewLetters();
     this.getNewLicenseNumber();
