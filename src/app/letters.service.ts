@@ -28,7 +28,7 @@ export class LettersService {
    * Generate the list of letter strings.
    */
   public loadLetterList(): Promise<void> {
-    return this.http.get('../assets/words/letters.json')
+    return this.http.get('../assets/words/letters2.json')
     .toPromise()
     .then((res: WordDictionary) => {
       this._letters = Object.keys(res);
