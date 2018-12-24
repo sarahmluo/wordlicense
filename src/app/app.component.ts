@@ -26,11 +26,11 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      // Load dictionary and letters
-      return this.dictionary.loadDictionary()
-        .then(() => {
-          return this.letters.loadLetterList();
-        });
+    // Load dictionary and letters
+    return this.dictionary.loadDictionary()
+      .then(() => {
+        return this.letters.loadLetterList();
+      });
     })
     .catch(err => {
       console.log(err);
