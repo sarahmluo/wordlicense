@@ -13,3 +13,15 @@
 .word-card-icon {
   margin-right: 5px;
 }
+
+.word-input-container {
+  text-align: center;
+
+  .word-input {
+    border-color: var(--ion-color-primary);
+    border-width: 0 0 2px 0;
+    border-style: solid;
+    margin: 10px 15px 0;
+    padding: 5px;
+  }
+}

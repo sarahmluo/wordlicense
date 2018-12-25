@@ -1,9 +1,35 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>word-list</ion-title>
+    <div slot="start">
+      <ion-icon 
+        color="primary" 
+        name="arrow-back" 
+        (click)="goBack()"
+        size="large"></ion-icon>
+    </div>
+    <ion-title>Word Lookup</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <div class="word-input-container">
+        Enter a three-letter combination in the box below to 
+        obtain a corresponding list of words.
+      </div>
+      <div class="word-input-container">
+        <form #form="ngForm" (ngSubmit)="onLetterSubmit()">
+          <input [(ngModel)]="letterInput" (ngModelChange)="clearWordList()" type="text" id="letterInput" name="letterInput" class="word-input"/>
+          <ion-button type="submit" size="small" shape="round" color="primary">Go</ion-button>
+        </form>
+      </div>
+    </ion-card-content>
+  </ion-card>
 
+  <ion-card *ngIf="wordList.length && letterInput">
+    <ion-item *ngFor="let item of wordList">
+      <ion-label>{{item}}</ion-label>
+    </ion-item>
+  </ion-card>
 </ion-content>

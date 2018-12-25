@@ -12,7 +12,7 @@ import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.co
 export class LicensePlateComponent implements OnInit {
   constructor(
     private dictionary: DictionaryService,
-    private letter: LettersService,
+    private letterService: LettersService,
     private toast: ToastController
   ) { }
 
@@ -82,7 +82,7 @@ export class LicensePlateComponent implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
-    this.licenseImage.nativeElement.style.backgroundImage = "url(../../../assets/licensePlates/1.png)";
+    this.licenseImage.nativeElement.style.backgroundImage = 'url(../../../assets/licensePlates/1.png)';
   }
 
   /**
@@ -90,7 +90,7 @@ export class LicensePlateComponent implements OnInit {
    */
   public startGame(): void {
     this.hasStarted = true;
-    this.letters = this.letter.letters;
+    this.letters = this.letterService.letters;
     this.numLetters = this.letters.length;
     this.attempts = 0;
     this.successes = 0;

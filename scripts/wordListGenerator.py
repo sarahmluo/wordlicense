@@ -101,7 +101,7 @@ def writeLetters2():
     # for each one, find 5 words that match its Regex
     for key in wordList.keys():
         words = wordList[key]
-        if(len(words) > 0):
+        if(len(words) > 3):
             counter += 1
             g.write("\"" + key + "\": 1,")
 

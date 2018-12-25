@@ -30,6 +30,9 @@ export class AppComponent {
     return this.dictionary.loadDictionary()
       .then(() => {
         return this.letters.loadLetterList();
+      })
+      .then(() => {
+        return this.letters.loadWordList();
       });
     })
     .catch(err => {

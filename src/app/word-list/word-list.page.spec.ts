@@ -10,7 +10,7 @@ describe('WordListPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ WordListPage ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
   }));
