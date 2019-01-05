@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
-
-import { LettersService } from '../letters.service';
+import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 
 @Component({
   selector: 'app-word-list',
@@ -10,7 +9,7 @@ import { LettersService } from '../letters.service';
 })
 export class WordListPage implements OnInit {
   constructor(
-    private letterService: LettersService,
+    private dictionary: DictionaryService,
     private navCtrl: NavController,
     private toast: ToastController
   ) { }
@@ -57,7 +56,7 @@ export class WordListPage implements OnInit {
     }
 
     // hydrate word list
-    this.wordList = this.letterService.wordList[this.letterInput];
+    this.wordList = this.dictionary.wordList[this.letterInput];
   }
 
   /**

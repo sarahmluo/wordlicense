@@ -3,8 +3,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
 
-import { DictionaryService } from './dictionary.service';
-import { LettersService } from './letters.service';
+import { DictionaryService } from '../core/dictionary/dictionary.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +12,6 @@ import { LettersService } from './letters.service';
 export class AppComponent {
   constructor(
     private dictionary: DictionaryService,
-    private letters: LettersService,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
@@ -29,10 +27,10 @@ export class AppComponent {
     // Load dictionary and letters
     return this.dictionary.loadDictionary()
       .then(() => {
-        return this.letters.loadLetterList();
+        return this.dictionary.loadLetterList();
       })
       .then(() => {
-        return this.letters.loadWordList();
+        return this.dictionary.loadWordList();
       });
     })
     .catch(err => {

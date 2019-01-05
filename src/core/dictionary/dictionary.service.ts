@@ -1,7 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file/ngx';
-import { HttpClient } from '@angular/common/http';
-import { WordDictionary } from './types';
+
+import { WordDictionary, WordList } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +19,36 @@ export class DictionaryService {
   private _dictionary: Set<string>;
 
   /**
+   * List of letter strings to be used in the
+   * license plate game.
+   */
+  private _letters: string[];
+
+  /**
+   * List of letter strings along
+   * with sample word list.
+   */
+  private _wordList: WordList;
+
+  /**
    * Getter for dictionary.
    */
   public get dictionary(): Set<string> {
     return this._dictionary;
+  }
+
+  /**
+   * Getter for the letter list.
+   */
+  public get letters(): string[] {
+    return this._letters;
+  }
+
+  /**
+   * Getter for the letter list.
+   */
+  public get wordList(): WordList {
+    return this._wordList;
   }
 
   /**
@@ -55,5 +82,27 @@ export class DictionaryService {
         console.log(this._dictionary.size);
       })
     }); */
+  }
+
+  /**
+   * Generate the list of letter strings.
+   */
+  public loadLetterList(): Promise<void> {
+    return this.http.get('../assets/words/letters2.json')
+    .toPromise()
+    .then((res: WordDictionary) => {
+      this._letters = Object.keys(res);
+    });
+  }
+
+  /**
+   * Fetch the list of words for each letter combination.
+   */
+  public loadWordList(): Promise<void> {
+    return this.http.get('../assets/words/wordList.json')
+    .toPromise()
+    .then((res: WordList) => {
+      this._wordList = res;
+    });
   }
 }

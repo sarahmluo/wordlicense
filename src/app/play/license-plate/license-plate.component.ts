@@ -1,8 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { DictionaryService } from 'src/app/dictionary.service';
-import { LettersService } from 'src/app/letters.service';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
+import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 
 @Component({
   selector: 'app-license-plate',
@@ -12,7 +11,6 @@ import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.co
 export class LicensePlateComponent implements OnInit {
   constructor(
     private dictionary: DictionaryService,
-    private letterService: LettersService,
     private toast: ToastController
   ) { }
 
@@ -90,7 +88,7 @@ export class LicensePlateComponent implements OnInit {
    */
   public startGame(): void {
     this.hasStarted = true;
-    this.letters = this.letterService.letters;
+    this.letters = this.dictionary.letters;
     this.numLetters = this.letters.length;
     this.attempts = 0;
     this.successes = 0;

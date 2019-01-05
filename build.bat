@@ -1,0 +1,1 @@
+npm install && ionic cordova platform add android && copy /y release-signing.properties platforms\android && npm run publish.android
