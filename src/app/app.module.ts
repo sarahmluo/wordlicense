@@ -5,6 +5,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { AppVersion } from '@ionic-native/app-version/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { SQLite } from '@ionic-native/sqlite';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
@@ -25,6 +26,7 @@ import { AppComponent } from './app.component';
     File,
     StatusBar,
     SplashScreen,
+    SQLite,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

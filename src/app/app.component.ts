@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
+import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
 import { DictionaryService } from '../core/dictionary/dictionary.service';
 
@@ -14,6 +15,7 @@ export class AppComponent {
     private dictionary: DictionaryService,
     private platform: Platform,
     private splashScreen: SplashScreen,
+    private sqlite: WlSqliteService,
     private statusBar: StatusBar
   ) {
     this.initializeApp();
@@ -31,6 +33,10 @@ export class AppComponent {
       })
       .then(() => {
         return this.dictionary.loadWordList();
+      })
+      .then(() => {
+        // create score table
+        return this.sqlite.executeSQL('../sqlite/Score/Score__Table');
       });
     })
     .catch(err => {

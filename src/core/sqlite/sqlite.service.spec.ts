@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LettersService } from './letters.service';
+import { WlSqliteService } from './sqlite.service';
 
-describe('LettersService', () => {
+describe('SqliteService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: LettersService = TestBed.get(LettersService);
+    const service: WlSqliteService = TestBed.get(WlSqliteService);
     expect(service).toBeTruthy();
   });
 });
