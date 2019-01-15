@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 
@@ -10,6 +10,7 @@ import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 })
 export class LicensePlateComponent implements OnInit {
   constructor(
+    private alertCtrl: AlertController,
     private dictionary: DictionaryService,
     private toast: ToastController
   ) { }
@@ -122,8 +123,11 @@ export class LicensePlateComponent implements OnInit {
    * Stop the game.
    */
   public stop(): void {
-    this.hasStarted = false;
-    this.reset();
+    // prompt to save score
+    this.presentSaveAlert().then(() => {
+      this.hasStarted = false;
+      this.reset();
+    });
   }
 
   /**
@@ -164,6 +168,50 @@ export class LicensePlateComponent implements OnInit {
     this.attempts++;
     this.wordInput = '';
     this.getNewLicenseDisplay();
+  }
+
+  /**
+   * Logic to create an present an alert controller to save
+   * the user's score.
+   */
+  private async presentSaveAlert(): Promise<void> {
+    const saveAlert: HTMLIonAlertElement = await this.alertCtrl.create({
+      header: 'Save Score?',
+      message: 'Provide your initials to save your score',
+      inputs: [
+        {
+          name: 'initials',
+          type: 'text',
+          id: 'initials',
+          placeholder: 'AAA'
+        }
+      ],
+      buttons: [
+        {
+          text: 'No Thanks',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {}
+        },
+        {
+          text: 'Save',
+          handler: (data) => {
+            this.saveScore(data);
+          }
+        }
+      ]
+    });
+
+    await saveAlert.present();
+  }
+
+  /**
+   * Save a user's score.
+   * 
+   * @param data User input.
+   */
+  private async saveScore(data: any): Promise<void> {
+    console.log(data);
   }
 
   /**

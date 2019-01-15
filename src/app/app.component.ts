@@ -35,6 +35,11 @@ export class AppComponent {
         return this.dictionary.loadWordList();
       })
       .then(() => {
+        return this.sqlite.openDatabase({
+          name: 'UserScores'
+        });
+      })
+      .then(() => {
         // create score table
         return this.sqlite.executeSQL('../sqlite/Score/Score__Table');
       });
