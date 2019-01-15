@@ -68,7 +68,7 @@ export class WordTimerComponent implements OnInit {
   /**
    * On Init.
    */
-  ngOnInit() {
+  public ngOnInit(): void {
     this.setCss();
     this.resetTimer();
   }

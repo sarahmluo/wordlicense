@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
+
+import { LicensePlateComponent } from './license-plate/license-plate.component';
 
 @Component({
   selector: 'app-play',
@@ -12,6 +14,12 @@ export class PlayPage implements OnInit {
   ) { }
 
   /**
+   * License plate component.
+   */
+  @ViewChild(LicensePlateComponent)
+  public license: LicensePlateComponent;
+
+  /**
    * On Init.
    */
   public ngOnInit(): void {
@@ -21,6 +29,8 @@ export class PlayPage implements OnInit {
    * Navigate to previous page.
    */
   public goBack(): void {
+    // clear and timers and request to save score
+    this.license.stop();
     this.navCtrl.navigateBack('/home');
   }
 }

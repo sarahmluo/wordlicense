@@ -173,7 +173,9 @@ export class LicensePlateComponent implements OnInit {
     this.attempts = 0;
     this.successes = 0;
     this.wordInput = '';
-    this.timer.resetTimer();
+    if (this.timer) {
+      this.timer.resetTimer();
+    }
   }
 
   /**
