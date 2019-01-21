@@ -36,12 +36,15 @@ export class AppComponent {
       })
       .then(() => {
         return this.sqlite.openDatabase({
-          name: 'UserScores'
+          name: 'UserScores',
+          location: 'default'
         });
       })
       .then(() => {
         // create score table
-        return this.sqlite.executeSQL('../sqlite/Score/Score__Table');
+        return this.sqlite.executeSQL({
+          procName: '../sqlite/Score/Score__Table'
+        });
       });
     })
     .catch(err => {

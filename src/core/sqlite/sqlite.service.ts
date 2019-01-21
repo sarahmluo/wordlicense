@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 
-import { WlSQLiteDB, WlSQLiteParameters } from './types';
+import { WlSQLiteDB, WlSqliteObject, WlSQLiteParameters } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -42,14 +42,19 @@ export class WlSqliteService {
    * @param proc The SQL proc file, including path.
    * @param params Optional list of parameters.
    */
-  public async executeSQL(proc: string, params?: WlSQLiteParameters): Promise<any> {
+  public async executeSQL(sqliteObj: WlSqliteObject): Promise<any> {
+    const procName = sqliteObj.procName;
+    const params = sqliteObj.params;
+
     // Check if proc name was provided
-    if (!proc) {
-      throw new Error(`Expected proc name, but received ${proc}`);
+    if (!procName) {
+      throw new Error(`Expected proc name, but received ${procName}`);
     }
  
     // Load SQL
-    let statement: string = await this.loadSQL(proc);
+    let statement: string = window['__sqliteProcs'][procName];
+
+    console.log('Proc: ' + procName + ' Statement: ' + statement);
     
     if (params && Object.keys(params).length > 0) {
       // prep parameter list

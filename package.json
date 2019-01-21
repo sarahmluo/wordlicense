@@ -10,6 +10,7 @@
     "build": "ng build",
     "test": "ng test",
     "e2e": "ng e2e",
+    "ionic:build:after": "gulp sqlite",
     "publish": "build",
     "publish.android": "ionic cordova build android --release --prod"
   },
@@ -72,6 +73,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "through2": "^3.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "tslint-eslint-rules": "^5.4.0",

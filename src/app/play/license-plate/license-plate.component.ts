@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 import { DictionaryService } from 'src/core/dictionary/dictionary.service';
+import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
 @Component({
   selector: 'app-license-plate',
@@ -12,6 +13,7 @@ export class LicensePlateComponent implements OnInit {
   constructor(
     private alertCtrl: AlertController,
     private dictionary: DictionaryService,
+    private sqlite: WlSqliteService,
     private toast: ToastController
   ) { }
 
@@ -66,6 +68,11 @@ export class LicensePlateComponent implements OnInit {
    * Number of successful submissions.
    */
   public successes: number;
+
+  /**
+   * Default initials for entering score.
+   */
+  private defaultInitials: string = 'AAA';
 
   /**
    * Number of available letter combinations.
@@ -183,7 +190,7 @@ export class LicensePlateComponent implements OnInit {
           name: 'initials',
           type: 'text',
           id: 'initials',
-          placeholder: 'AAA'
+          placeholder: this.defaultInitials
         }
       ],
       buttons: [
@@ -211,7 +218,18 @@ export class LicensePlateComponent implements OnInit {
    * @param data User input.
    */
   private async saveScore(data: any): Promise<void> {
-    console.log(data);
+    const initials: string = 
+      data.initials ? data.initials.toString().toUpperCase() : this.defaultInitials;
+
+      return this.sqlite.executeSQL({
+        procName: '../../../sqlite/Score/Score__Create',
+        params: {
+          Initials: initials,
+          Score: this.successes,
+          Total: this.attempts,
+          ScoreDate: new Date().toISOString()
+        }
+      });
   }
 
   /**
