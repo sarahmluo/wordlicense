@@ -43,7 +43,7 @@ export class AppComponent {
       .then(() => {
         // create score table
         return this.sqlite.executeSQL({
-          procName: '../sqlite/Score/Score__Table'
+          procName: 'Score__Table'
         });
       });
     })

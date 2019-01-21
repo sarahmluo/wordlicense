@@ -214,15 +214,15 @@ export class LicensePlateComponent implements OnInit {
 
   /**
    * Save a user's score.
-   * 
+   *
    * @param data User input.
    */
   private async saveScore(data: any): Promise<void> {
-    const initials: string = 
+    const initials: string =
       data.initials ? data.initials.toString().toUpperCase() : this.defaultInitials;
 
       return this.sqlite.executeSQL({
-        procName: '../../../sqlite/Score/Score__Create',
+        procName: 'Score__Create',
         params: {
           Initials: initials,
           Score: this.successes,

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
+import { isUndefined } from 'ts-utils';
 
 import { WlSQLiteDB, WlSqliteObject, WlSQLiteParameters } from './types';
 
@@ -17,7 +18,7 @@ export class WlSqliteService {
    * Current active database.
    */
   private db: SQLiteObject;
-  
+
   /**
    * Regex for sqlite parameter
    */
@@ -25,7 +26,7 @@ export class WlSqliteService {
 
   /**
    * Create and open a database.
-   * 
+   *
    * @param config
    */
   public async openDatabase(config: WlSQLiteDB): Promise<SQLiteObject> {
@@ -38,7 +39,7 @@ export class WlSqliteService {
 
   /**
    * Execute inline SQL.
-   * 
+   *
    * @param proc The SQL proc file, including path.
    * @param params Optional list of parameters.
    */
@@ -50,31 +51,30 @@ export class WlSqliteService {
     if (!procName) {
       throw new Error(`Expected proc name, but received ${procName}`);
     }
- 
+
     // Load SQL
     let statement: string = window['__sqliteProcs'][procName];
 
     console.log('Proc: ' + procName + ' Statement: ' + statement);
-    
+
     if (params && Object.keys(params).length > 0) {
       // prep parameter list
-      let paramList: any[] = this.prepParams(statement, params);
+      const paramList: any[] = this.prepParams(statement, params);
 
       // replace parameter names in proc with question marks
-      statement.replace(this.paramRegex, '?');
+      statement = statement.replace(this.paramRegex, '?');
 
       // execute statement
       return this.db.executeSql(statement, paramList);
-      
-    }
-    else {
+
+    } else {
       return this.db.executeSql(statement);
     }
   }
 
   /**
    * Load a proc string from the filesystem.
-   * 
+   *
    * @param procName Name of proc to load, path included.
    */
   public async loadSQL(procName: string): Promise<string> {
@@ -88,22 +88,22 @@ export class WlSqliteService {
   }
 
   /**
-   * Prep the parameter list by matching the named parameters in 
+   * Prep the parameter list by matching the named parameters in
    * the statement with the parameters in the JSON object.
-   * 
+   *
    * @param statement SQLite statement
    * @param params Parameter list
    */
   private prepParams(statement: string, params: WlSQLiteParameters): any[] {
-    
-    let values: any[] = [];
+
+    const values: any[] = [];
 
     // get parameter names from the proc
-    const paramNames: string[] = statement.match(this.paramRegex);
+    const paramNames: string[] = statement.match(this.paramRegex).map(name => name.substring(1));
 
     // loop through and build parameter array in the right order
-    for (let name of paramNames) {
-      if (!params[name]) {
+    for (const name of paramNames) {
+      if (isUndefined(params[name])) {
         throw new Error(`${name} parameter is undefined!`);
       }
       values.push(params[name]);
