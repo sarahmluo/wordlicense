@@ -73,21 +73,6 @@ export class WlSqliteService {
   }
 
   /**
-   * Load a proc string from the filesystem.
-   *
-   * @param procName Name of proc to load, path included.
-   */
-  public async loadSQL(procName: string): Promise<string> {
-    return this.http.get(procName, {responseType: 'text'})
-    .toPromise()
-    .then(res => res.toString())
-    .catch(err => {
-      console.log(err);
-      return '';
-    });
-  }
-
-  /**
    * Prep the parameter list by matching the named parameters in
    * the statement with the parameters in the JSON object.
    *
