@@ -1,0 +1,13 @@
+table {
+  width: 100%;
+
+  th {
+    border-bottom-color: var(--ion-color-primary);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+  }
+
+  td {
+    text-align: center;
+  }
+}

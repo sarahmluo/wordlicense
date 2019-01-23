@@ -129,12 +129,9 @@ export class LicensePlateComponent implements OnInit {
   /**
    * Stop the game.
    */
-  public stop(): void {
+  public stop(): Promise<void> {
     // prompt to save score
-    this.presentSaveAlert().then(() => {
-      this.hasStarted = false;
-      this.reset();
-    });
+    return this.presentSaveAlert();
   }
 
   /**
@@ -182,34 +179,41 @@ export class LicensePlateComponent implements OnInit {
    * the user's score.
    */
   private async presentSaveAlert(): Promise<void> {
-    const saveAlert: HTMLIonAlertElement = await this.alertCtrl.create({
-      header: 'Save Score?',
-      message: 'Provide your initials to save your score',
-      inputs: [
-        {
-          name: 'initials',
-          type: 'text',
-          id: 'initials',
-          placeholder: this.defaultInitials
-        }
-      ],
-      buttons: [
-        {
-          text: 'No Thanks',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {}
-        },
-        {
-          text: 'Save',
-          handler: (data) => {
-            this.saveScore(data);
+    if (this.hasStarted) {
+      const saveAlert: HTMLIonAlertElement = await this.alertCtrl.create({
+        header: 'Save Score?',
+        message: 'Provide your initials to save your score',
+        inputs: [
+          {
+            name: 'initials',
+            type: 'text',
+            id: 'initials',
+            placeholder: this.defaultInitials
           }
-        }
-      ]
-    });
+        ],
+        buttons: [
+          {
+            text: 'No Thanks',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {}
+          },
+          {
+            text: 'Save',
+            handler: (data) => {
+             return this.saveScore(data).then(() => {
+               this.reset();
+             });
+            }
+          }
+        ]
+      });
 
-    await saveAlert.present();
+      await saveAlert.present();
+    } else {
+      this.reset();
+      return Promise.resolve();
+    }
   }
 
   /**
@@ -217,7 +221,7 @@ export class LicensePlateComponent implements OnInit {
    *
    * @param data User input.
    */
-  private async saveScore(data: any): Promise<void> {
+  private async saveScore(data: any): Promise<any> {
     const initials: string =
       data.initials ? data.initials.toString().toUpperCase() : this.defaultInitials;
 
@@ -236,6 +240,7 @@ export class LicensePlateComponent implements OnInit {
    * Reset runtime variables.
    */
   private reset(): void {
+    this.hasStarted = false;
     this.attempts = 0;
     this.successes = 0;
     this.wordInput = '';

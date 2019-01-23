@@ -25,6 +25,11 @@ export class WlSqliteService {
   private paramRegex: RegExp = new RegExp('@\\w+', 'g');
 
   /**
+   * Regex for select query.
+   */
+  private selectRegex: RegExp = new RegExp('^select', 'i');
+
+  /**
    * Create and open a database.
    *
    * @param config
@@ -43,7 +48,7 @@ export class WlSqliteService {
    * @param proc The SQL proc file, including path.
    * @param params Optional list of parameters.
    */
-  public async executeSQL(sqliteObj: WlSqliteObject): Promise<any> {
+  public async executeSQL(sqliteObj: WlSqliteObject): Promise<number | void | any[]> {
     const procName = sqliteObj.procName;
     const params = sqliteObj.params;
 
@@ -54,22 +59,35 @@ export class WlSqliteService {
 
     // Load SQL
     let statement: string = window['__sqliteProcs'][procName];
+    let paramList: any[] = [];
 
     console.log('Proc: ' + procName + ' Statement: ' + statement);
 
     if (params && Object.keys(params).length > 0) {
       // prep parameter list
-      const paramList: any[] = this.prepParams(statement, params);
+      paramList = this.prepParams(statement, params);
+    } 
 
-      // replace parameter names in proc with question marks
-      statement = statement.replace(this.paramRegex, '?');
+    // replace parameter names in proc with question marks
+    statement = statement.replace(this.paramRegex, '?').trim();
 
-      // execute statement
-      return this.db.executeSql(statement, paramList);
+    // execute statement
+    return this.db.executeSql(statement, paramList).then(res => {
+      
+      let data: any[] | number;
 
-    } else {
-      return this.db.executeSql(statement);
-    }
+      if (this.selectRegex.test(statement)) {
+        data = [];
+
+        for (let i = 0; i < res.rows.length; i++) {
+          data.push(res.rows.item(i));
+        }
+      } else {
+        data = res.insertId || 0;
+      }
+
+      return data;
+    });
   }
 
   /**

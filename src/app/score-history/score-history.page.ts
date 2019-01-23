@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
 import { UserScore } from './types';
@@ -10,6 +11,7 @@ import { UserScore } from './types';
 })
 export class ScoreHistoryPage implements OnInit {
   constructor(
+    private navCtrl: NavController,
     private sqlite: WlSqliteService
   ) { }
 
@@ -26,14 +28,20 @@ export class ScoreHistoryPage implements OnInit {
   }
 
   /**
+   * Navigate Back to home screen.
+   */
+  public goBack(): void {
+    this.navCtrl.navigateBack('/home');
+  }
+
+  /**
    * Hydrate scores.
    */
   private hydrateScores(): Promise<void> {
     return this.sqlite.executeSQL({
-      procName: 'Score__Read_All',
-    }).then(res => {
+      procName: 'Score__Read',
+    }).then((res: UserScore[]) => {
       this.userScores = res;
     });
   }
-
 }

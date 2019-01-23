@@ -29,7 +29,8 @@ export class PlayPage implements OnInit {
    * Navigate to previous page.
    */
   public goBack(): void {
-    this.license.stop();
-    this.navCtrl.navigateBack('/home');
+    this.license.stop().then(() => {
+      this.navCtrl.navigateBack('/home');
+    });
   }
 }
