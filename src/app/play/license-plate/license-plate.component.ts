@@ -130,8 +130,12 @@ export class LicensePlateComponent implements OnInit {
    * Stop the game.
    */
   public stop(): Promise<void> {
-    // prompt to save score
-    return this.presentSaveAlert();
+    if (this.hasStarted) {
+      // prompt to save score
+      return this.presentSaveAlert();
+    } else {
+      return Promise.resolve();
+    }
   }
 
   /**
@@ -179,41 +183,36 @@ export class LicensePlateComponent implements OnInit {
    * the user's score.
    */
   private async presentSaveAlert(): Promise<void> {
-    if (this.hasStarted) {
-      const saveAlert: HTMLIonAlertElement = await this.alertCtrl.create({
-        header: 'Save Score?',
-        message: 'Provide your initials to save your score',
-        inputs: [
-          {
-            name: 'initials',
-            type: 'text',
-            id: 'initials',
-            placeholder: this.defaultInitials
+    const saveAlert: HTMLIonAlertElement = await this.alertCtrl.create({
+      header: 'Save Score?',
+      message: 'Provide your initials to save your score',
+      inputs: [
+        {
+          name: 'initials',
+          type: 'text',
+          id: 'initials',
+          placeholder: this.defaultInitials
+        }
+      ],
+      buttons: [
+        {
+          text: 'No Thanks',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {}
+        },
+        {
+          text: 'Save',
+          handler: (data) => {
+            return this.saveScore(data).then(() => {
+              this.reset();
+            });
           }
-        ],
-        buttons: [
-          {
-            text: 'No Thanks',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          },
-          {
-            text: 'Save',
-            handler: (data) => {
-             return this.saveScore(data).then(() => {
-               this.reset();
-             });
-            }
-          }
-        ]
-      });
+        }
+      ]
+    });
 
-      await saveAlert.present();
-    } else {
-      this.reset();
-      return Promise.resolve();
-    }
+    await saveAlert.present();
   }
 
   /**
@@ -228,11 +227,20 @@ export class LicensePlateComponent implements OnInit {
       return this.sqlite.executeSQL({
         procName: 'Score__Create',
         params: {
-          Initials: initials,
+          Initials: initials.length > 3 ? initials.substring(0,3) : initials,
           Score: this.successes,
           Total: this.attempts,
           ScoreDate: new Date().toISOString()
         }
+      }).then(() => {
+        return this.alertCtrl.create({
+          header: 'Save Confirmation',
+          message: 'Save Successful!',
+          buttons: ['OK']
+        });
+      })
+      .then(res => {
+        return res.present();
       });
   }
 

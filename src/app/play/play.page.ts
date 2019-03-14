@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 
 import { LicensePlateComponent } from './license-plate/license-plate.component';
@@ -8,7 +8,7 @@ import { LicensePlateComponent } from './license-plate/license-plate.component';
   templateUrl: './play.page.html',
   styleUrls: ['./play.page.scss']
 })
-export class PlayPage implements OnInit {
+export class PlayPage {
   constructor(
     private navCtrl: NavController
   ) { }
@@ -18,12 +18,6 @@ export class PlayPage implements OnInit {
    */
   @ViewChild(LicensePlateComponent)
   public license: LicensePlateComponent;
-
-  /**
-   * On Init.
-   */
-  public ngOnInit(): void {
-  }
 
   /**
    * Navigate to previous page.

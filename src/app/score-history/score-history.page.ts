@@ -39,7 +39,7 @@ export class ScoreHistoryPage implements OnInit {
    */
   private hydrateScores(): Promise<void> {
     return this.sqlite.executeSQL({
-      procName: 'Score__Read',
+      procName: 'Score__Read_All',
     }).then((res: UserScore[]) => {
       this.userScores = res;
     });
