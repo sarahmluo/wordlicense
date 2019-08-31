@@ -55,7 +55,7 @@ export class DictionaryService {
    * Load dictionary into memory.
    */
   public loadDictionary(): Promise<void> {
-    return this.http.get('../assets/words/words.json')
+    return this.http.get('../assets/words/websters.json')
       .toPromise()
       .then((res: WordDictionary) => {
         this._dictionary = new Set(Object.keys(res));
@@ -88,7 +88,7 @@ export class DictionaryService {
    * Generate the list of letter strings.
    */
   public loadLetterList(): Promise<void> {
-    return this.http.get('../assets/words/letters2.json')
+    return this.http.get('../assets/words/lettersNew.json')
     .toPromise()
     .then((res: WordDictionary) => {
       this._letters = Object.keys(res);

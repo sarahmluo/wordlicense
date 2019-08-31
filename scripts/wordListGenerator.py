@@ -20,7 +20,7 @@ def writeWordList():
     # use os.path to generate the filepath
     data_folder = os.path.join("..", "src", "assets", "words")
     
-    file_to_open = os.path.join(data_folder, "words.json")
+    file_to_open = os.path.join(data_folder, "websters.json")
     
     dictFile = open(file_to_open)
     
@@ -30,7 +30,7 @@ def writeWordList():
     # Load the list of three letter combos
     combo_folder = os.path.join("..", "src", "assets", "words")
     
-    combo_file_to_open = os.path.join(combo_folder, "letters.json")
+    combo_file_to_open = os.path.join(combo_folder, "lettersNew.json")
     
     comboFile = open(combo_file_to_open)
     
@@ -57,7 +57,7 @@ def writeWordList():
         reObj = re.compile('([a-z])*' + x + '([a-z])*' + y + '([a-z])*' + z + '([a-z])*')        
         for word in dictionary.keys():
             if(reObj.match(word)):
-                if (len(word) <= 7):
+                if (len(word) <= 20):
                     counter += 1
                     if(counter == 1):
                         g.write("\"" + word + "\"")
@@ -97,8 +97,9 @@ def writeLetters2():
     counter = 0
     
     
-    # loop through each three-letter combination
-    # for each one, find 5 words that match its Regex
+    # loop through three letter combo,
+    # only keep the ones that have more than 
+    # three words associated with them
     for key in wordList.keys():
         words = wordList[key]
         if(len(words) > 3):
@@ -109,5 +110,5 @@ def writeLetters2():
     g.write("}")
     print(counter)
     
-#writeWordList()
-writeLetters2()
+writeWordList()
+#writeLetters2()

@@ -27,9 +27,14 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="wordList.length && letterInput">
+  <ion-card *ngIf="wordList.length && letterInput; else emptyList">
     <ion-item *ngFor="let item of wordList">
       <ion-label>{{item}}</ion-label>
     </ion-item>
   </ion-card>
+
+  <ng-template>
+    We don't have any words for those letters <br />
+    <ion-icon name="sad"></ion-icon>
+  </ng-template>
 </ion-content>

@@ -23,7 +23,7 @@ def writeLetterCombos():
     # use os.path to generate the filepath
     data_folder = os.path.join("..", "src", "assets", "words")
     
-    file_to_open = os.path.join(data_folder, "words.json")
+    file_to_open = os.path.join(data_folder, "websters.json")
     
     f = open(file_to_open)
     
@@ -37,7 +37,7 @@ def writeLetterCombos():
     letters = []
     
     # prepare resulting json file
-    file_to_create = os.path.join(data_folder, "letters.json")
+    file_to_create = os.path.join(data_folder, "lettersNew.json")
     
     if os.path.exists(file_to_create):
         os.remove(file_to_create)
@@ -49,6 +49,7 @@ def writeLetterCombos():
     # loop through each three-letter combination
     # for each one, test a regular expression against 
     # the dictionary keys
+    # Only take ones that have at least three words associated with them
     for letter1 in alphabet:
         x = letter1
         for letter2 in alphabet:
@@ -56,11 +57,14 @@ def writeLetterCombos():
             for letter3 in alphabet:
                 z = letter3
                 reObj = re.compile('([a-z])*' + x + '([a-z])*' + y + '([a-z])*' + z + '([a-z])*')
+                numWords = 0
                 for key in data.keys():
                     if(reObj.match(key)):
-                        letters.append(x + y + z)
-                        g.write("\"" + x + y + z + "\": 1,")
-                        break
+                        numWords += 1
+                        if (numWords == 3):
+                            letters.append(x + y + z)
+                            g.write("\"" + x + y + z + "\": 1,")
+                            break
     
     g.write("}")
     print(len(letters))    
