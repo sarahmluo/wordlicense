@@ -1,6 +1,6 @@
 {
   "name": "wordlicense",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "author": "Word License",
   "homepage": "http://www.sarahsmathings.com/",
   "scripts": {
@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.10.0",
-    "@angular-devkit/build-angular": "^0.803.2",
+    "@angular-devkit/build-angular": "^0.10.0",
     "@angular-devkit/core": "~7.0.0",
     "@angular-devkit/schematics": "~7.0.0",
     "@angular/cli": "~7.0.0",

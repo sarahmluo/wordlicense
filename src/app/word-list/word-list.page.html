@@ -33,8 +33,10 @@
     </ion-item>
   </ion-card>
 
-  <ng-template>
-    We don't have any words for those letters <br />
-    <ion-icon name="sad"></ion-icon>
+  <ng-template #emptyList>
+    <ion-card *ngIf="!firstEntry && letterInput && showMsg">
+      We don't have any words for those letters <br />
+      <ion-icon name="sad"></ion-icon>
+    </ion-card>
   </ng-template>
 </ion-content>

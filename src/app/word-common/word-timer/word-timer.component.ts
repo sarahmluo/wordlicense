@@ -84,6 +84,13 @@ export class WordTimerComponent implements OnInit {
   }
 
   /**
+   * Stop the timer.
+   */
+  public stopTimer() {
+    clearTimeout(this.timer);
+  }
+
+  /**
    * Run the timer.
    */
   private runTimer(): void {

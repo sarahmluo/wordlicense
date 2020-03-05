@@ -25,6 +25,16 @@ export class WordListPage implements OnInit {
   public letterInput: string;
 
   /**
+   * Flag indicating first entry.
+   */
+  public firstEntry: boolean = true;
+
+  /**
+   * Flag indicating whether to show no words message.
+   */
+  public showMsg: boolean = false;
+
+  /**
    * On Init.
    */
   public ngOnInit(): void {
@@ -42,6 +52,8 @@ export class WordListPage implements OnInit {
    */
   public async onLetterSubmit(): Promise<any> {
 
+    this.firstEntry = false;
+    this.showMsg = true;
     // validate user input
     const regex: RegExp = new RegExp('^([a-z]){3}$');
     if (!regex.test(this.letterInput.toLowerCase())) {
@@ -56,14 +68,18 @@ export class WordListPage implements OnInit {
     }
 
     // hydrate word list
-    this.wordList = this.dictionary.wordList[this.letterInput];
+    this.wordList = this.dictionary.wordList[this.letterInput.toLowerCase()] || [];
   }
 
   /**
    * Clear word list.
    */
   public clearWordList(): void {
-    this.wordList = [];
+    this.showMsg = false;
+    
+    if (this.letterInput.length == 0) {
+      this.wordList = [];
+    }
   }
 
 }

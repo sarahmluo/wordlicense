@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
@@ -13,6 +13,7 @@ export class LicensePlateComponent implements OnInit {
   constructor(
     private alertCtrl: AlertController,
     private dictionary: DictionaryService,
+    private navCtrl: NavController,
     private sqlite: WlSqliteService,
     private toast: ToastController
   ) { }
@@ -132,6 +133,7 @@ export class LicensePlateComponent implements OnInit {
   public stop(): Promise<void> {
     if (this.hasStarted) {
       // prompt to save score
+      this.timer.stopTimer();
       return this.presentSaveAlert();
     } else {
       return Promise.resolve();
@@ -199,7 +201,9 @@ export class LicensePlateComponent implements OnInit {
           text: 'No Thanks',
           role: 'cancel',
           cssClass: 'secondary',
-          handler: () => {}
+          handler: () => {
+            this.navCtrl.navigateBack('/home');
+          }
         },
         {
           text: 'Save',
