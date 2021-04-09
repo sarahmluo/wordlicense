@@ -27,20 +27,9 @@ export class LicensePlateComponent implements OnInit {
   public timer: WordTimerComponent;
 
   /**
-   * License Image.
-   */
-  @ViewChild('licenseImage')
-  public licenseImage: ElementRef;
-
-  /**
    * Flag indicating if the game has started.
    */
   public hasStarted: boolean = false;
-
-  /**
-   * Dynamic css for image div.
-   */
-  public imageCss: any = {};
 
   /**
    * Array of three-letter combinations.
@@ -75,7 +64,7 @@ export class LicensePlateComponent implements OnInit {
   /**
    * CSS string for background image.
    */
-  public bgImage: LicenseImageCss;
+  public imageCss: LicenseImageCss;
 
   /**
    * Default initials for entering score.
@@ -96,12 +85,7 @@ export class LicensePlateComponent implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
-   // this.licenseImage.nativeElement.style.backgroundImage = 'url(../../../assets/licensePlates/1.png)';
-   this.bgImage = {
-     'background': 'url(../../../assets/licensePlates/1.png)',
-     'background-repeat': 'no-repeat',
-     'background-size': 'cover'
-    };
+   this.setLicenseCss();
   }
 
   /**
@@ -121,13 +105,7 @@ export class LicensePlateComponent implements OnInit {
    * Get a new license display.
    */
   public getNewLicenseDisplay(): void {
-    const num: number = Math.ceil(Math.random() * this.numLicensePlates);
-    //this.licenseImage.nativeElement.style.backgroundImage = `url(../../../assets/licensePlates/${num}.png`;
-    this.bgImage = {
-      'background': 'url(../../../assets/licensePlates/' + num + '.png',
-      'background-repeat': 'no-repeat',
-      'background-size': 'cover'
-      };
+    this.setLicenseCss();
     this.getNewLetters();
     this.getNewLicenseNumber();
     if (this.timer) {
@@ -205,6 +183,18 @@ export class LicensePlateComponent implements OnInit {
     this.attempts++;
     this.wordInput = '';
     this.getNewLicenseDisplay();
+  }
+
+  /**
+   * Logic to set license plate image css.
+   */
+  private setLicenseCss(): void {
+    const num: number = Math.ceil(Math.random() * this.numLicensePlates);
+    this.imageCss = {
+      'background': 'url(../../../assets/licensePlates/' + num + '.png)',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover'
+     };
   }
 
   /**
