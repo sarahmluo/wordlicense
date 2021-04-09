@@ -61,7 +61,12 @@ export class WordListPage implements OnInit {
         message: 'Please enter three letters only',
         duration: 2000,
         position: 'top',
-        showCloseButton: true
+        buttons: [
+          {
+          text: 'Close',
+          role: 'cancel'
+          }
+        ]
       });
 
       return tst.present();

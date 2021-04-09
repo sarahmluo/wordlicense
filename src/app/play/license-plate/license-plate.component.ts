@@ -4,6 +4,8 @@ import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.co
 import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
+import { LicenseImageCss } from './types';
+
 @Component({
   selector: 'app-license-plate',
   templateUrl: './license-plate.component.html',
@@ -71,6 +73,11 @@ export class LicensePlateComponent implements OnInit {
   public successes: number;
 
   /**
+   * CSS string for background image.
+   */
+  public bgImage: LicenseImageCss;
+
+  /**
    * Default initials for entering score.
    */
   private defaultInitials: string = 'AAA';
@@ -89,7 +96,12 @@ export class LicensePlateComponent implements OnInit {
    * On Init.
    */
   public ngOnInit(): void {
-    this.licenseImage.nativeElement.style.backgroundImage = 'url(../../../assets/licensePlates/1.png)';
+   // this.licenseImage.nativeElement.style.backgroundImage = 'url(../../../assets/licensePlates/1.png)';
+   this.bgImage = {
+     'background': 'url(../../../assets/licensePlates/1.png)',
+     'background-repeat': 'no-repeat',
+     'background-size': 'cover'
+    };
   }
 
   /**
@@ -110,7 +122,12 @@ export class LicensePlateComponent implements OnInit {
    */
   public getNewLicenseDisplay(): void {
     const num: number = Math.ceil(Math.random() * this.numLicensePlates);
-    this.licenseImage.nativeElement.style.backgroundImage = `url(../../../assets/licensePlates/${num}.png`;
+    //this.licenseImage.nativeElement.style.backgroundImage = `url(../../../assets/licensePlates/${num}.png`;
+    this.bgImage = {
+      'background': 'url(../../../assets/licensePlates/' + num + '.png',
+      'background-repeat': 'no-repeat',
+      'background-size': 'cover'
+      };
     this.getNewLetters();
     this.getNewLicenseNumber();
     if (this.timer) {
@@ -155,7 +172,12 @@ export class LicensePlateComponent implements OnInit {
         message: 'That word doesn\'t match the given letters!',
         duration: 2000,
         position: 'top',
-        showCloseButton: true
+        buttons: [
+          {
+          text: 'Close',
+          role: 'cancel'
+          }
+        ]
       });
 
       return tst.present();
@@ -167,7 +189,12 @@ export class LicensePlateComponent implements OnInit {
         message: 'That word is not in the dictionary!',
         duration: 2000,
         position: 'top',
-        showCloseButton: true
+        buttons: [
+          {
+          text: 'Close',
+          role: 'cancel'
+          }
+        ]
       });
 
       return tst.present();
