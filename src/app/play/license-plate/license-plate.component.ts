@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 import { DictionaryService } from 'src/core/dictionary/dictionary.service';
@@ -11,14 +11,21 @@ import { LicenseImageCss } from './types';
   templateUrl: './license-plate.component.html',
   styleUrls: ['./license-plate.component.scss']
 })
-export class LicensePlateComponent implements OnInit {
+export class LicensePlateComponent implements AfterViewInit {
   constructor(
     private alertCtrl: AlertController,
     private dictionary: DictionaryService,
     private navCtrl: NavController,
+    private renderer: Renderer2,
     private sqlite: WlSqliteService,
     private toast: ToastController
   ) { }
+
+  /**
+   * License plate image element ref.
+   */
+  @ViewChild('licenseImage')
+  public licenseImage: ElementRef;
 
   /**
    * Timer component.
@@ -84,7 +91,7 @@ export class LicensePlateComponent implements OnInit {
   /**
    * On Init.
    */
-  public ngOnInit(): void {
+  public ngAfterViewInit(): void {
    this.setLicenseCss();
   }
 
@@ -105,12 +112,12 @@ export class LicensePlateComponent implements OnInit {
    * Get a new license display.
    */
   public getNewLicenseDisplay(): void {
-    this.setLicenseCss();
     this.getNewLetters();
     this.getNewLicenseNumber();
     if (this.timer) {
       this.timer.resetTimer();
     }
+    this.setLicenseCss();
   }
 
   /**
@@ -190,15 +197,11 @@ export class LicensePlateComponent implements OnInit {
    */
   private setLicenseCss(): void {
     const num: number = Math.ceil(Math.random() * this.numLicensePlates);
-    this.imageCss = {
-      'background': 'url(../../../assets/licensePlates/' + num + '.png)',
-      'background-repeat': 'no-repeat',
-      'background-size': 'cover'
-     };
+    this.renderer.setStyle(this.licenseImage.nativeElement, 'backgroundImage', `url(../../../assets/licensePlates/${num}.png)`);
   }
 
   /**
-   * Logic to create an present an alert controller to save
+   * Logic to create and present an alert controller to save
    * the user's score.
    */
   private async presentSaveAlert(): Promise<void> {

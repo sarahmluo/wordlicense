@@ -12,7 +12,7 @@
       (click)="skip()">Skip</ion-button>
   </div>
 
-  <div class="word-license-image" [ngStyle]="bgImage">
+  <div class="word-license-image" [ngStyle]="imageCss" #licenseImage>
     <span *ngIf="hasStarted">{{letters[currentIndex]}} {{licenseNumber}}</span>
   </div>
 
@@ -23,8 +23,8 @@
     </p>
   </div>
 
-  <div *ngIf="hasStarted" class="word-license-footer">
-    <app-word-timer
+ <div *ngIf="hasStarted" class="word-license-footer">
+   <app-word-timer
       color="#3880ff"
       fill="solid"
       shape="round"

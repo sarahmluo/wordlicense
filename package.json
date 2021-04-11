@@ -80,7 +80,7 @@
     "typescript": "~4.0.2"
   },
   "config": {
-    "ionic_source_map_type": "inline-source-map",
+    "ionic_source_map_type": "source-map",
     "ionic_webpack": "./config/webpack.config.js"
   },
   "description": "A word-finding game based on state license plates.",
