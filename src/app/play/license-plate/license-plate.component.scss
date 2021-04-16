@@ -1,0 +1,44 @@
+@font-face {
+  font-family: LicensePlate;
+  src: url(../../../fonts/LicensePlate.ttf);
+}
+
+.word-license-header {
+  content: " ";
+  margin: auto;
+  position: relative;
+  width: 330px;
+}
+
+.word-skip-button {
+  position: absolute;
+  right: 0;
+}
+
+.word-start-message {
+  margin: auto;
+  padding-top: 10px;
+  text-align: center;
+  width: 300px;
+}
+
+.word-license-image {
+  /*background-image: url(../../../assets/licensePlates/1.png);*/
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: LicensePlate;
+  font-size: 52pt;
+  height: 150px;
+  margin: auto;
+  padding-top: 50px;
+  position: relative;
+  text-align: center;
+  width: 300px;
+}
+
+.word-license-footer {
+  margin: auto;
+  padding-top: 10px;
+  position: relative;
+  width: 330px;
+}

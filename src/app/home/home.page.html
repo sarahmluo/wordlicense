@@ -1,20 +1,45 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding ion-text-center">
+  <div class="word-menu-container">
+    <div class="word-title">
+      Word License
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div class="word-menu-button">
+      <ion-button
+        routerLink="play"
+        color="primary"
+        shape="round"
+        expand="block">
+        Play
+      </ion-button>
+      <ion-button
+        routerLink="instructions"
+        color="primary"
+        shape="round"
+        expand="block">
+        Instructions
+      </ion-button>
+      <ion-button
+        routerLink="word-list"
+        color="primary"
+        shape="round"
+        expand="block">
+        Word Lookup
+      </ion-button>
+      <ion-button
+        routerLink="score-history"
+        color="primary"
+        shape="round"
+        expand="block">
+        High Scores
+      </ion-button>
+      <ion-button
+        routerLink="about"
+        color="primary"
+        shape="round"
+        expand="block">
+        About
+      </ion-button>
+    </div>
   </div>
 </ion-content>

@@ -1,18 +1,47 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { HomePage } from './home.page';
 
-import { HomePageRoutingModule } from './home-routing.module';
 
+const routes: Routes = [
+  {
+    path: 'home',
+    component: HomePage,
+    children : [
+      {
+        path: 'play',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../play/play.module').then(m => m.PlayPageModule)
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  }
+];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    RouterModule.forChild([
+      {
+        path: '',
+        component: HomePage
+      }
+    ])
+    //RouterModule.forChild(routes)
+   // HomePageRoutingModule
   ],
   declarations: [HomePage]
 })

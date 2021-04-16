@@ -1,5 +1,10 @@
 {
   "name": "new",
-  "integrations": {},
-  "type": "angular"
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular",
+  "hooks": {
+    "build:after": "./attach-source-maps.js"
+  }
 }

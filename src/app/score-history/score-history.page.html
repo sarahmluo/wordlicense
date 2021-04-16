@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <div slot="start" class="word-back-icon">
+      <ion-icon 
+        color="primary" 
+        name="arrow-back" 
+        (click)="goBack()"
+        size="large"></ion-icon>
+    </div>
+    <ion-title>High Scores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-content>
+      <table>
+        <tr>
+          <th>User</th>
+          <th>Score</th>
+          <th>Date</th>
+        </tr>
+        <tr *ngFor="let score of userScores">
+          <td>{{score.Initials}}</td>
+          <td>{{score.Score}}/{{score.Total}}</td>
+          <td>{{score.ScoreDate | date: 'shortDate'}}</td>
+        </tr>
+      </table>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

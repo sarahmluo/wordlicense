@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <div slot="start" class="word-back-icon">
+      <ion-icon
+        color="primary"
+        name="arrow-back"
+        (click)="goBack()"
+        size="large"></ion-icon>
+    </div>
+    <ion-title>Instructions</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-item>
+      <ion-icon color="primary" name="play" class="word-card-icon"></ion-icon>
+      <ion-label>Getting Started</ion-label>
+    </ion-item>
+
+    <ion-card-content>
+      To play Word License, select the "Play" option from the home page and then click
+      the "Start" button.
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-item>
+      <ion-icon color="primary" name="information-circle" class="word-card-icon"></ion-icon>
+      <ion-label>How to Play</ion-label>
+    </ion-item>
+
+    <ion-card-content>
+      The concept behind Word License is fairly simple. You are given a license plate
+      with three letters and three numbers. The goal for each set of three letters is to find a word in the dictionary that
+      contains those three letters in the given order. The letters do not have to appear
+      in the word consecutively.
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-item>
+      <ion-icon color="primary" name="bulb" class="word-card-icon"></ion-icon>
+      <ion-label>Example</ion-label>
+    </ion-item>
+
+    <ion-card-content>
+      For example, given the letters 'LEC', possible words include, but are not limited to
+      "leach", "lecture", and "electric". Note that the word does not have to begin with the
+      first letter in the given set of three.
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-item>
+      <ion-icon color="primary" name="alert" class="word-card-icon"></ion-icon>
+      <ion-label>Notice</ion-label>
+    </ion-item>
+
+    <ion-card-content>
+      Every three letter combination corresponds to at least one word in the dictionary, even if
+      does not seem like it. You can look up sample words for a given letter combination in
+      the word lookup tool.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
