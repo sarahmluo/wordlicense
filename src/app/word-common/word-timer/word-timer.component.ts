@@ -37,10 +37,12 @@ export class WordTimerComponent implements OnInit {
   public fill: WordTimerFill = 'solid';
 
   /**
-   * Start time in milliseconds. Defaults to 5 seconds.
+   * Settable startTime as string. Converts input to internal integer value.
    */
   @Input()
-  public startTime: number = 5000;
+  public set startTime(sTime : string){
+    this._startTime = parseInt(sTime);
+  }
 
   /**
    * Event emitted when timer finishes.
@@ -63,7 +65,15 @@ export class WordTimerComponent implements OnInit {
    */
   public css: WordTimerCss;
 
+  /**
+   * Internal timer.
+   */
   public timer: any;
+
+/**
+ * Start time in milliseconds. Defaults to 5 seconds.
+ */
+  private _startTime: number = 5000;
 
   /**
    * On Init.
@@ -78,7 +88,7 @@ export class WordTimerComponent implements OnInit {
    */
   public resetTimer() {
     clearTimeout(this.timer);
-    this.timeRemaining = this.startTime;
+    this.timeRemaining = this._startTime;
     this.setDisplayTime(this.timeRemaining);
     this.runTimer();
   }

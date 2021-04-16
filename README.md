@@ -10,3 +10,11 @@
  to use the value ```inline-source-map```. Then when debugging remotely, you 
  can find the original typescript files in the webpack folder.
 
+ If the above doesn't work, add the following in ionic.config.json:
+
+ ```bash
+   "hooks": {
+    "build:after": "./attach-source-maps.js"
+  }
+  ```
+
