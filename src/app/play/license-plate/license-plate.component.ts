@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
-import { LicenseImageCss } from './types';
+import { largeFontSize, smallFontSize, minViewPortWidth } from './types';
 
 @Component({
   selector: 'app-license-plate',
@@ -69,9 +69,17 @@ export class LicensePlateComponent implements AfterViewInit {
   public successes: number;
 
   /**
-   * CSS string for background image.
+   * License plate image number.
    */
-  public imageCss: LicenseImageCss;
+  public imageNumber: number;
+
+  public viewPortWidth: number;
+
+  public minViewPortWidth: number = minViewPortWidth;
+
+  public smallFontSize: number = smallFontSize;
+
+  public largeFontSize: number = largeFontSize;
 
   /**
    * Default initials for entering score.
@@ -91,8 +99,17 @@ export class LicensePlateComponent implements AfterViewInit {
   /**
    * On Init.
    */
+  public ngOnInit(): void {
+    this.viewPortWidth = window.innerWidth;
+  }
+
+  /**
+   * After Init.
+   */
   public ngAfterViewInit(): void {
-   this.setLicenseCss();
+    this.setImageNumber();
+    this.setImageCss();
+    this.setLicenseTextCss();
   }
 
   /**
@@ -117,7 +134,7 @@ export class LicensePlateComponent implements AfterViewInit {
     if (this.timer) {
       this.timer.resetTimer();
     }
-    this.setLicenseCss();
+    this.setImageNumber();
   }
 
   /**
@@ -190,6 +207,21 @@ export class LicensePlateComponent implements AfterViewInit {
     this.attempts++;
     this.wordInput = '';
     this.getNewLicenseDisplay();
+  }
+
+  private setImageNumber(): void {
+    this.imageNumber = Math.ceil(Math.random() * this.numLicensePlates);
+  }
+
+  private setImageCss(): void {
+
+  }
+
+  private setLicenseTextCss(): void {
+    // const viewPortWidth = window.innerWidth;
+    // if (viewPortWidth < 300) {
+    //   this.licenseTextCss = {}
+    // }
   }
 
   /**

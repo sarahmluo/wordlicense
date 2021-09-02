@@ -1,47 +1,33 @@
 <ion-content class="ion-padding ion-text-center">
-  <ion-card class="word-menu-container">
-    <ion-card-content class="word-menu-content">
-      <div class="word-title">
-        Word License
-      </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" offset-md="3">
+        <ion-card class="word-menu-container">
+          <ion-card-content class="word-menu-content">
+            <div class="word-title">
+              Word License
+            </div>
 
-      <div class="word-menu-button">
-        <ion-button
-          routerLink="play"
-          color="primary"
-          shape="round"
-          expand="block">
-          Play
-        </ion-button>
-        <ion-button
-          routerLink="instructions"
-          color="primary"
-          shape="round"
-          expand="block">
-          Instructions
-        </ion-button>
-        <ion-button
-          routerLink="word-list"
-          color="primary"
-          shape="round"
-          expand="block">
-          Word Lookup
-        </ion-button>
-        <ion-button
-          routerLink="score-history"
-          color="primary"
-          shape="round"
-          expand="block">
-          High Scores
-        </ion-button>
-        <ion-button
-          routerLink="about"
-          color="primary"
-          shape="round"
-          expand="block">
-          About
-        </ion-button>
-      </div>
-    </ion-card-content>
-  </ion-card>
+            <div class="word-menu-button">
+              <ion-button routerLink="play" color="primary" shape="round" expand="block">
+                Play
+              </ion-button>
+              <ion-button routerLink="instructions" color="primary" shape="round" expand="block">
+                Instructions
+              </ion-button>
+              <ion-button routerLink="word-list" color="primary" shape="round" expand="block">
+                Word Lookup
+              </ion-button>
+              <ion-button routerLink="score-history" color="primary" shape="round" expand="block">
+                High Scores
+              </ion-button>
+              <ion-button routerLink="about" color="primary" shape="round" expand="block">
+                About
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -1,19 +1,27 @@
 <div>
   <div class="word-license-header">
     <ion-button
-      size="small"
       shape="round"
-      (click)="stop()">Stop</ion-button>
+      size="small"
+      fill="outline">
+      Score: {{successes}}/{{attempts}}
+    </ion-button>
+
     <ion-button
       class="word-skip-button"
       size="small"
       shape="round"
-      fill="outline"
-      (click)="skip()">Skip</ion-button>
+      (click)="stop()">Stop
+    </ion-button>
   </div>
 
-  <div class="word-license-image" [ngStyle]="imageCss" #licenseImage>
-    <span *ngIf="hasStarted">{{letters[currentIndex]}} {{licenseNumber}}</span>
+  <div class="word-license-image">
+    <img src="../../../assets/licensePlates/{{imageNumber}}.png"/>
+    <span
+      *ngIf="hasStarted"
+      [style.font-size.pt]="viewPortWidth < minViewPortWidth ? smallFontSize : largeFontSize">
+        {{letters[currentIndex]}} {{licenseNumber}}
+    </span>
   </div>
 
   <div *ngIf="!hasStarted" class="word-start-message">
@@ -25,7 +33,7 @@
 
  <div *ngIf="hasStarted" class="word-license-footer">
    <app-word-timer
-      color="#3880ff"
+      color="#091c82"
       fill="solid"
       shape="round"
       startTime="20000"
@@ -33,11 +41,10 @@
 
       <ion-button
         class="word-skip-button"
-        shape="round"
         size="small"
-        fill="outline">
-        Score: {{successes}}/{{attempts}}
-      </ion-button>
+        shape="round"
+        fill="outline"
+        (click)="skip()">Skip</ion-button>
   </div>
 
   <div *ngIf="hasStarted" class="word-input-container">
