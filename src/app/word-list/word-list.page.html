@@ -25,7 +25,7 @@
               <form #form="ngForm" (ngSubmit)="onLetterSubmit()">
                 <input [(ngModel)]="letterInput" (ngModelChange)="clearWordList()" type="text" id="letterInput"
                   name="letterInput" class="word-input" />
-                <ion-button type="submit" size="small" shape="round" color="primary">Go</ion-button>
+                <ion-button class="word-go-button" type="submit" size="small" shape="round" color="primary">Go</ion-button>
               </form>
             </div>
           </ion-card-content>
@@ -39,8 +39,10 @@
 
         <ng-template #emptyList>
           <ion-card *ngIf="!firstEntry && letterInput && showMsg">
-            We don't have any words for those letters <br />
-            <ion-icon name="sad"></ion-icon>
+            <ion-card-content class="ion-text-center">
+              We don't have any words for those letters <br />
+              <ion-icon class="word-sad-icon" color="primary" name="sad"></ion-icon>
+            </ion-card-content>
           </ion-card>
         </ng-template>
       </ion-col>

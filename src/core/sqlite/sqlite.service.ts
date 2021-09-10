@@ -66,14 +66,14 @@ export class WlSqliteService {
     if (params && Object.keys(params).length > 0) {
       // prep parameter list
       paramList = this.prepParams(statement, params);
-    } 
+    }
 
     // replace parameter names in proc with question marks
     statement = statement.replace(this.paramRegex, '?').trim();
 
     // execute statement
     return this.db.executeSql(statement, paramList).then(res => {
-      
+
       let data: any[] | number;
 
       if (this.selectRegex.test(statement)) {
