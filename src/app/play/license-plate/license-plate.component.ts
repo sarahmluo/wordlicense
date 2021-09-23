@@ -1,22 +1,35 @@
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 import { DictionaryService } from 'src/core/dictionary/dictionary.service';
 import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
-import { largeFontSize, smallFontSize, minViewPortWidth } from './types';
+import { largeFontSize, minViewPortWidth, smallFontSize } from './types';
 
 @Component({
   selector: 'app-license-plate',
   templateUrl: './license-plate.component.html',
-  styleUrls: ['./license-plate.component.scss']
+  styleUrls: ['./license-plate.component.scss'],
+  animations: [ trigger('successAnimation', [
+    state('true', style({
+      boxShadow: 'none',
+      fontWeight: 'normal'
+    })),
+    transition('* => *', animate('1000ms linear', keyframes([
+      style({boxShadow: 'none', fontWeight: 'normal', offset: 0}),
+      style({boxShadow: '0 0 20px #091c82', fontWeight: 'bold', offset: 0.25}),
+      style({boxShadow: '0 0 20px #091c82', fontWeight: 'bold', offset: 0.5}),
+      style({boxShadow: '0 0 20px #091c82', fontWeight: 'bold', offset: 0.75}),
+      style({boxShadow: 'none', fontWeight: 'normal', offset: 1})
+    ])))
+  ])]
 })
 export class LicensePlateComponent implements AfterViewInit {
   constructor(
     private alertCtrl: AlertController,
     private dictionary: DictionaryService,
     private navCtrl: NavController,
-    private renderer: Renderer2,
     private sqlite: WlSqliteService,
     private toast: ToastController
   ) { }
@@ -73,12 +86,24 @@ export class LicensePlateComponent implements AfterViewInit {
    */
   public imageNumber: number;
 
+  /**
+   * Used in template to determine license plate font size.
+   */
   public viewPortWidth: number;
 
+  /**
+   * Used in template to determine license plate font size.
+   */
   public minViewPortWidth: number = minViewPortWidth;
 
+  /**
+   * Used in template to set license plate font size.
+   */
   public smallFontSize: number = smallFontSize;
 
+  /**
+   * Used in template to set license plate font size.
+   */
   public largeFontSize: number = largeFontSize;
 
   /**
@@ -97,6 +122,11 @@ export class LicensePlateComponent implements AfterViewInit {
   private numLicensePlates: number = 15;
 
   /**
+   * State flag for animation.
+   */
+  private hadSuccess: string = 'false';
+
+  /**
    * On Init.
    */
   public ngOnInit(): void {
@@ -108,8 +138,6 @@ export class LicensePlateComponent implements AfterViewInit {
    */
   public ngAfterViewInit(): void {
     this.setImageNumber();
-    this.setImageCss();
-    this.setLicenseTextCss();
   }
 
   /**
@@ -129,6 +157,7 @@ export class LicensePlateComponent implements AfterViewInit {
    * Get a new license display.
    */
   public getNewLicenseDisplay(): void {
+    //this.hadSuccess = 'false';
     this.getNewLetters();
     this.getNewLicenseNumber();
     if (this.timer) {
@@ -206,30 +235,15 @@ export class LicensePlateComponent implements AfterViewInit {
     this.successes++;
     this.attempts++;
     this.wordInput = '';
+    this.hadSuccess = this.hadSuccess === 'true' ? 'false' : 'true';
     this.getNewLicenseDisplay();
   }
 
+  /**
+   * Determine number of license plate image.
+   */
   private setImageNumber(): void {
     this.imageNumber = Math.ceil(Math.random() * this.numLicensePlates);
-  }
-
-  private setImageCss(): void {
-
-  }
-
-  private setLicenseTextCss(): void {
-    // const viewPortWidth = window.innerWidth;
-    // if (viewPortWidth < 300) {
-    //   this.licenseTextCss = {}
-    // }
-  }
-
-  /**
-   * Logic to set license plate image css.
-   */
-  private setLicenseCss(): void {
-    const num: number = Math.ceil(Math.random() * this.numLicensePlates);
-    this.renderer.setStyle(this.licenseImage.nativeElement, 'backgroundImage', `url(../../../assets/licensePlates/${num}.png)`);
   }
 
   /**

@@ -1,11 +1,10 @@
 <div>
   <div class="word-license-header">
-    <ion-button
-      shape="round"
-      size="small"
-      fill="outline">
-      Score: {{successes}}/{{attempts}}
-    </ion-button>
+    <ion-label
+      class="word-score-label"
+      [@successAnimation]="hadSuccess">
+      SCORE: {{successes}}/{{attempts}}
+    </ion-label>
 
     <ion-button
       class="word-skip-button"
@@ -27,7 +26,13 @@
   <div *ngIf="!hasStarted" class="word-start-message">
     Click the start button to begin!
     <p>
-      <ion-button size="small" shape="round" color="primary" (click)="startGame()">Start</ion-button>
+      <ion-button
+        size="small"
+        shape="round"
+        color="primary"
+        (click)="startGame()">
+        Start
+      </ion-button>
     </p>
   </div>
 
@@ -49,8 +54,20 @@
 
   <div *ngIf="hasStarted" class="word-input-container">
     <form #form="ngForm" (ngSubmit)="onWordSubmit()">
-      <input [(ngModel)]="wordInput" type="text" id="wordInput" name="wordInput" class="word-input"/>
-      <ion-button class="word-go-button" type="submit" size="small" shape="round" color="primary">Go</ion-button>
+      <input
+        [(ngModel)]="wordInput"
+        type="text"
+        id="wordInput"
+        name="wordInput"
+        class="word-input"/>
+      <ion-button
+        class="word-go-button"
+        type="submit"
+        size="small"
+        shape="round"
+        color="primary">
+        Go
+      </ion-button>
     </form>
   </div>
 </div>
