@@ -9,6 +9,18 @@
   position: relative;
 }
 
+.word-score-label {
+  border: 2px solid var(--ion-color-primary);
+  border-radius: 50px;
+  color: var(--ion-color-primary);
+  display: inline-block;
+  font-family: sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.78px;
+  margin: 4px 2px;
+  padding: 3px 10px;
+}
+
 .word-skip-button {
   position: absolute;
   right: 0;
