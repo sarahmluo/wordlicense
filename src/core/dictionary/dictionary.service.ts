@@ -1,15 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { File } from '@ionic-native/file/ngx';
 
-import { WordDictionary, WordList } from './types';
+import { apiUrl } from '../environment';
+import { WordList } from './types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DictionaryService {
   constructor(
-    private file: File,
     private http: HttpClient
   ) { }
 
@@ -34,75 +33,57 @@ export class DictionaryService {
    * Getter for dictionary.
    */
   public get dictionary(): Set<string> {
-    return this._dictionary;
+    return {...this._dictionary};
   }
 
   /**
    * Getter for the letter list.
    */
   public get letters(): string[] {
-    return this._letters;
+    return {...this._letters};
   }
 
   /**
    * Getter for the letter list.
    */
   public get wordList(): WordList {
-    return this._wordList;
+    return {...this._wordList};
   }
 
   /**
    * Load dictionary into memory.
    */
-  public loadDictionary(): Promise<void> {
-    return this.http.get('../assets/words/websters.json')
-      .toPromise()
-      .then((res: WordDictionary) => {
-        this._dictionary = new Set(Object.keys(res));
-      });
-
-    // as of 12/5/2018, cannot debug File plugin on
-    // device bc sourcemaps are not loaded in Ionic 4
-    // for Android. So for now, using http as above.
-    /* console.log('loading dictinary file');
-    return new Promise<void>((resolve, reject) => {
-      this.file.checkDir(this.file.applicationStorageDirectory, 'assets')
-      .then(() => {
-        console.log('checking file...');
-        return this.file.checkFile('../assets/', 'words.txt')
-      })
-      .then(() => {
-        console.log('reading file...');
-        return this.file.readAsText('../assets/', 'words.txt');
-      })
-      .then((res: string) => {
-        const dict: string[]  = res.split('\n');
-        this._dictionary = new Set(dict);
-        console.log('Dictionary loaded!');
-        console.log(this._dictionary.size);
-      })
-    }); */
+  public loadDictionary(): void {
+    this.http.get<string[]>(apiUrl + '/wordlist')
+      .subscribe(
+        res => this._dictionary = new Set(Object.keys(res)),
+        console.error,
+        () => console.log('Dictionary loaded')
+      );
   }
 
   /**
    * Generate the list of letter strings.
    */
-  public loadLetterList(): Promise<void> {
-    return this.http.get('../assets/words/lettersNew.json')
-    .toPromise()
-    .then((res: WordDictionary) => {
-      this._letters = Object.keys(res);
-    });
+  public loadLetterList(): void {
+    this.http.get<string[]>(apiUrl + '/letterlist')
+    .subscribe(
+      res => this._letters = Object.keys(res),
+      console.error,
+      () => console.log('Letter list loaded')
+    );
   }
 
   /**
    * Fetch the list of words for each letter combination.
+   * Only used in offline mode.
    */
-  public loadWordList(): Promise<void> {
-    return this.http.get('../assets/words/wordList.json')
-    .toPromise()
-    .then((res: WordList) => {
-      this._wordList = res;
-    });
+  public loadWordList(): void {
+    this.http.get<WordList>('../assets/words/wordList.json')
+    .subscribe(
+      res => this._wordList = res,
+      console.error,
+      () => console.log('Word list loaded')
+    );
   }
 }
