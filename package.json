@@ -26,6 +26,7 @@
     "@ionic-native/app-version": "^5.36.0",
     "@ionic-native/core": "^5.1.0",
     "@ionic-native/file": "^5.36.0",
+    "@ionic-native/http": "^5.36.0",
     "@ionic-native/ionic-webview": "^5.36.0",
     "@ionic-native/splash-screen": "^5.36.0",
     "@ionic-native/sqlite": "^5.36.0",
@@ -56,6 +57,7 @@
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
     "cordova-android": "^10.1.0",
+    "cordova-plugin-advanced-http": "^3.2.1",
     "cordova-plugin-app-version": "^0.1.12",
     "cordova-plugin-file": "^6.0.2",
     "cordova-plugin-splashscreen": "^6.0.0",
@@ -93,7 +95,10 @@
       "cordova-plugin-file": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-statusbar": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-advanced-http": {
+        "ANDROIDBLACKLISTSECURESOCKETPROTOCOLS": "SSLv3,TLSv1"
+      }
     },
     "platforms": [
       "android"

@@ -26,16 +26,11 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-    // Load dictionary and letters
-    return this.dictionary.loadDictionary()
-      .then(() => {
-        return this.dictionary.loadLetterList();
-      })
-      .then(() => {
-        return this.dictionary.loadWordList();
-      })
-      .then(() => {
-        return this.sqlite.openDatabase({
+      this.dictionary.loadDictionary();
+      this.dictionary.loadLetterList();
+      this.dictionary.loadWordList();
+
+      this.sqlite.openDatabase({
           name: 'UserScores',
           location: 'default'
         });
@@ -45,10 +40,9 @@ export class AppComponent {
         return this.sqlite.executeSQL({
           procName: 'Score__Table'
         });
+      })
+      .catch(err => {
+        console.log(err);
       });
-    })
-    .catch(err => {
-      console.log(err);
-    });
   }
 }
