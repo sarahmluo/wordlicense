@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { apiUrl } from '../environment';
 import { WordList } from './types';
 
 @Injectable({
@@ -11,6 +11,11 @@ export class DictionaryService {
   constructor(
     private http: HttpClient
   ) { }
+
+  /**
+   * Base URL for api calls.
+   */
+    public baseUrl: string = 'api/words';
 
   /**
    * Internal dictionary object.
@@ -53,37 +58,34 @@ export class DictionaryService {
   /**
    * Load dictionary into memory.
    */
-  public loadDictionary(): void {
-    this.http.get<string[]>(apiUrl + '/wordlist')
-      .subscribe(
-        res => this._dictionary = new Set(Object.keys(res)),
-        console.error,
-        () => console.log('Dictionary loaded')
-      );
+  public loadDictionary(): Promise<void> {
+    return this.http.get<string[]>(this.baseUrl + '/wordlist')
+      .toPromise()
+      .then((data: string[]) => {
+        this._dictionary = new Set(Object.keys(data));
+      });
   }
 
   /**
    * Generate the list of letter strings.
    */
-  public loadLetterList(): void {
-    this.http.get<string[]>(apiUrl + '/letterlist')
-    .subscribe(
-      res => this._letters = Object.keys(res),
-      console.error,
-      () => console.log('Letter list loaded')
-    );
+  public loadLetterList(): Promise<void> {
+    return this.http.get<string[]>(this.baseUrl + '/letterlist')
+      .toPromise()
+      .then((data: string[]) => {
+        this._letters = Object.keys(data);
+      });
   }
 
   /**
    * Fetch the list of words for each letter combination.
    * Only used in offline mode.
    */
-  public loadWordList(): void {
-    this.http.get<WordList>('../assets/words/wordList.json')
-    .subscribe(
-      res => this._wordList = res,
-      console.error,
-      () => console.log('Word list loaded')
-    );
+  public loadWordList(): Promise<void> {
+    return this.http.get<WordList>('../assets/words/wordList.json')
+      .toPromise()
+      .then((data: WordList) => {
+        this._wordList = data;
+      });
   }
 }
