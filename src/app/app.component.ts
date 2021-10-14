@@ -66,7 +66,7 @@ export class AppComponent {
         // populate local db
         if (res === 0){
           initialInstall = true;
-          this.dictionary.loadAllWords()
+          return this.dictionary.loadAllWords()
           .then(() => {
             return this.dictionary.saveAllWords();
           })
@@ -82,7 +82,7 @@ export class AppComponent {
         if(!initialInstall) {
           return this.dictionary.loadAllWordsLocal()
           .then(() => {
-            this.dictionary.loadLetterListLocal();
+            return this.dictionary.loadLetterListLocal();
           });
         }
       })

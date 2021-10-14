@@ -96,7 +96,7 @@ export class DictionaryService {
   }
 
   /**
-   * Generate the list of letter strings.
+   * Load the letter list from the server.
    */
   public loadLetterList(): Promise<void> {
     return this.api.get('letterlist')
@@ -104,6 +104,36 @@ export class DictionaryService {
       .then((data: string[]) => {
         this._letters = Object.keys(data);
       });
+  }
+
+  /**
+   * Load letter list locally.
+   */
+  public loadLetterListLocal(): Promise<void> {
+    return this.sqlite.executeSQL({
+      procName: 'Letters__Read_All'
+    })
+    .then((data: string[]) => {
+      this._letters = Object.keys(data);
+    })
+  }
+
+  /**
+   * Save letter combos to the sqlite db.
+   */
+  public saveLetterList(): Promise<void> {
+    let queries: WlSqliteObject[] = [];
+
+    for(const lettercombo of this._letters) {
+      queries.push({
+        procName: 'Letters__Create',
+        params: {
+          word: lettercombo
+        }
+      });
+    }
+
+    return this.sqlite.sqlBatch(queries);
   }
 
   /**
