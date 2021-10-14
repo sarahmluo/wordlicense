@@ -1,2 +1,2 @@
 select count(*)
-from Dictionary
+from Words

@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 
+import { ApiService } from '../api/api.service';
+import { WlSqliteService } from '../sqlite/sqlite.service';
+import { WlSqliteObject } from '../sqlite/types';
 import { WordList } from './types';
 
 @Injectable({
@@ -9,13 +11,10 @@ import { WordList } from './types';
 })
 export class DictionaryService {
   constructor(
-    private http: HttpClient
+    private api: ApiService,
+    private http: HttpClient,
+    private sqlite: WlSqliteService
   ) { }
-
-  /**
-   * Base URL for api calls.
-   */
-    public baseUrl: string = 'api/words';
 
   /**
    * Internal dictionary object.
@@ -56,10 +55,10 @@ export class DictionaryService {
   }
 
   /**
-   * Load dictionary into memory.
+   * Load words into runtime memory.
    */
-  public loadDictionary(): Promise<void> {
-    return this.http.get<string[]>(this.baseUrl + '/wordlist')
+  public loadAllWords(): Promise<void> {
+    return this.api.get('allwords')
       .toPromise()
       .then((data: string[]) => {
         this._dictionary = new Set(Object.keys(data));
@@ -67,10 +66,40 @@ export class DictionaryService {
   }
 
   /**
+   * Load all words from sqlite db into runtime memory.
+   */
+  public loadAllWordsLocal(): Promise<void>{
+    return this.sqlite.executeSQL({
+      procName: 'Words__Read_All'
+    })
+    .then((data: string[]) => {
+      this._dictionary = new Set(Object.keys(data));
+    });
+  }
+
+  /**
+   * Save words into local db.
+   */
+  public saveAllWords(): Promise<void> {
+    let queries: WlSqliteObject[] = [];
+
+    for(const word of this._dictionary) {
+      queries.push({
+        procName: 'Words__Create',
+        params: {
+          word: word
+        }
+      });
+    }
+
+    return this.sqlite.sqlBatch(queries);
+  }
+
+  /**
    * Generate the list of letter strings.
    */
   public loadLetterList(): Promise<void> {
-    return this.http.get<string[]>(this.baseUrl + '/letterlist')
+    return this.api.get('letterlist')
       .toPromise()
       .then((data: string[]) => {
         this._letters = Object.keys(data);
