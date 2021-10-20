@@ -1,4 +1,4 @@
 SELECT
-  word
+  Word
 FROM
   Words

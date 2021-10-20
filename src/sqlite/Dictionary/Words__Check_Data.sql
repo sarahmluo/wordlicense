@@ -1,2 +1,6 @@
-select count(*)
-from Words
+select
+  *
+from
+  Words
+limit
+  1

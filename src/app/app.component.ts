@@ -62,9 +62,9 @@ export class AppComponent {
           procName: 'Words__Check_Data'
         });
       })
-      .then((res: number) => {
+      .then((res: any[]) => {
         // populate local db
-        if (res === 0){
+        if (res.length === 0){
           initialInstall = true;
           return this.dictionary.loadAllWords()
           .then(() => {

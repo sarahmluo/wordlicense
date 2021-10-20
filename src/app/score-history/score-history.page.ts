@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
-import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
+import { WlSqliteService } from '../core/sqlite/sqlite.service';
 import { UserScore } from './types';
 
 @Component({

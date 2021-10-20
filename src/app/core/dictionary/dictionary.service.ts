@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { WlSqliteService } from '../sqlite/sqlite.service';
 import { WlSqliteObject } from '../sqlite/types';
-import { WordList } from './types';
+import { LetterList, WordList } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -37,14 +37,14 @@ export class DictionaryService {
    * Getter for dictionary.
    */
   public get dictionary(): Set<string> {
-    return {...this._dictionary};
+    return new Set(this._dictionary);
   }
 
   /**
    * Getter for the letter list.
    */
   public get letters(): string[] {
-    return {...this._letters};
+    return [...this._letters];
   }
 
   /**
@@ -55,13 +55,13 @@ export class DictionaryService {
   }
 
   /**
-   * Load words into runtime memory.
+   * Load words into runtime memory from the server.
    */
   public loadAllWords(): Promise<void> {
     return this.api.get('allwords')
       .toPromise()
       .then((data: string[]) => {
-        this._dictionary = new Set(Object.keys(data));
+        this._dictionary = new Set(Object.values(data));
       });
   }
 
@@ -69,11 +69,15 @@ export class DictionaryService {
    * Load all words from sqlite db into runtime memory.
    */
   public loadAllWordsLocal(): Promise<void>{
+    this._dictionary = new Set();
+
     return this.sqlite.executeSQL({
       procName: 'Words__Read_All'
     })
-    .then((data: string[]) => {
-      this._dictionary = new Set(Object.keys(data));
+    .then((data: LetterList[]) => {
+      data.forEach(datum =>
+        this._dictionary.add(Object.values(datum)[0])
+      );
     });
   }
 
@@ -102,7 +106,7 @@ export class DictionaryService {
     return this.api.get('letterlist')
       .toPromise()
       .then((data: string[]) => {
-        this._letters = Object.keys(data);
+        this._letters = Object.values(data);
       });
   }
 
@@ -110,11 +114,15 @@ export class DictionaryService {
    * Load letter list locally.
    */
   public loadLetterListLocal(): Promise<void> {
+    this._letters = [];
+
     return this.sqlite.executeSQL({
       procName: 'Letters__Read_All'
     })
-    .then((data: string[]) => {
-      this._letters = Object.keys(data);
+    .then((data: LetterList[]) => {
+      data.forEach(datum =>
+        this._letters.push(Object.values(datum)[0])
+      );
     })
   }
 
@@ -128,7 +136,7 @@ export class DictionaryService {
       queries.push({
         procName: 'Letters__Create',
         params: {
-          word: lettercombo
+          lettercombo: lettercombo
         }
       });
     }

@@ -1,9 +1,9 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { DictionaryService } from 'src/app/core/dictionary/dictionary.service';
+import { WlSqliteService } from 'src/app/core/sqlite/sqlite.service';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
-import { DictionaryService } from 'src/core/dictionary/dictionary.service';
-import { WlSqliteService } from 'src/core/sqlite/sqlite.service';
 
 import { largeFontSize, minViewPortWidth, smallFontSize } from './types';
 
@@ -144,6 +144,11 @@ export class LicensePlateComponent implements AfterViewInit {
    * Start the game.
    */
   public startGame(): void {
+    this.sqlite.executeSQL({
+      procName: 'Letters__Read_All'
+    }).then((res: any[]) => {
+      console.log(res);
+    })
     this.hasStarted = true;
     this.letters = this.dictionary.letters;
     this.numLetters = this.letters.length;
@@ -198,7 +203,7 @@ export class LicensePlateComponent implements AfterViewInit {
     const letter3: string = this.letters[this.currentIndex][2];
 
     const regExp: RegExp = new RegExp('^([a-z])*' + letter1 + '([a-z])*' + letter2 + '([a-z])*' + letter3 + '([a-z])*$');
-    if (!regExp.test(this.wordInput.toLowerCase())) {
+    if (!regExp.test(this.wordInput.trim().toLowerCase())) {
       const tst: HTMLIonToastElement = await this.toast.create({
         message: 'That word doesn\'t match the given letters!',
         duration: 2000,
@@ -215,7 +220,7 @@ export class LicensePlateComponent implements AfterViewInit {
     }
 
     // check if word is in dictionary.
-    if (!this.dictionary.dictionary.has(this.wordInput.toLowerCase())) {
+    if (!this.dictionary.dictionary.has(this.wordInput.trim().toLowerCase())) {
       const tst: HTMLIonToastElement = await this.toast.create({
         message: 'That word is not in the dictionary!',
         duration: 2000,
