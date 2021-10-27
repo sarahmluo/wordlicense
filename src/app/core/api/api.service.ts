@@ -16,7 +16,7 @@ export class ApiService {
   /**
    * Get method.
    */
-  public get(route: string): Observable<any> {
-    return this.http.get(this.baseUrl + route);
+  public get(route: string, params?: any): Observable<any> {
+    return this.http.get(this.baseUrl + route, params);
   }
 }

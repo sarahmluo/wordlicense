@@ -87,14 +87,14 @@ export class DictionaryService {
   public saveAllWords(): Promise<void> {
     let queries: WlSqliteObject[] = [];
 
-    for(const word of this._dictionary) {
+    this._dictionary.forEach(word =>
       queries.push({
         procName: 'Words__Create',
         params: {
           word: word
         }
-      });
-    }
+      })
+    );
 
     return this.sqlite.sqlBatch(queries);
   }
@@ -132,14 +132,14 @@ export class DictionaryService {
   public saveLetterList(): Promise<void> {
     let queries: WlSqliteObject[] = [];
 
-    for(const lettercombo of this._letters) {
+    this._letters.forEach(lettercombo =>
       queries.push({
         procName: 'Letters__Create',
         params: {
           lettercombo: lettercombo
         }
-      });
-    }
+      })
+    );
 
     return this.sqlite.sqlBatch(queries);
   }

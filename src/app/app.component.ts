@@ -24,7 +24,7 @@ export class AppComponent {
     this.initializeApp();
   }
 
- public initializeApp(): void {
+ public initializeApp(): Promise<void> {
 
   let initialInstall: boolean = false;
 
@@ -32,10 +32,11 @@ export class AppComponent {
     enableProdMode();
     this.api.baseUrl = `https://safeview-mobile.wentinc.com/${this.api.baseUrl}`;
   } else {
+    //this.api.baseUrl = `https://10.80.83.122:44309/${this.api.baseUrl}`;
     this.api.baseUrl = `https://192.168.31.185:44309/${this.api.baseUrl}`;
   }
 
-    this.platform.ready().then(() => {
+    return this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
@@ -45,7 +46,7 @@ export class AppComponent {
       // then assume fresh install, load full api and letter list
       // otherwise, notify of any api updates (future feature)
 
-      this.sqlite.openDatabase({
+      return this.sqlite.openDatabase({
           name: 'UserScores',
           location: 'default'
       })
@@ -64,7 +65,9 @@ export class AppComponent {
       })
       .then((res: any[]) => {
         // populate local db
+        console.log('populating db');
         if (res.length === 0){
+          console.log('initial install');
           initialInstall = true;
           return this.dictionary.loadAllWords()
           .then(() => {
@@ -79,7 +82,9 @@ export class AppComponent {
         }
       })
       .then(() => {
+        console.log('checking not initial install');
         if(!initialInstall) {
+          console.log('not initial install');
           return this.dictionary.loadAllWordsLocal()
           .then(() => {
             return this.dictionary.loadLetterListLocal();
