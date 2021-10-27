@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ToastController } from '@ionic/angular';
-import { DictionaryService } from 'src/core/dictionary/dictionary.service';
+
+import { DictionaryService } from '../core/dictionary/dictionary.service';
 
 @Component({
   selector: 'app-word-list',
@@ -81,7 +82,7 @@ export class WordListPage implements OnInit {
    */
   public clearWordList(): void {
     this.showMsg = false;
-    
+
     if (this.letterInput.length == 0) {
       this.wordList = [];
     }

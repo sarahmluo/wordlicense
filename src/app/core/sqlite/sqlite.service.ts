@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
-import { isUndefined } from 'ts-utils';
+import { isObject, isString, isUndefined } from 'ts-utils';
 
 import { WlSQLiteDB, WlSqliteObject, WlSQLiteParameters } from './types';
 
@@ -12,7 +12,10 @@ export class WlSqliteService {
   constructor(
     private http: HttpClient,
     private sqlite: SQLite
-  ) { }
+  ) {
+      // hydrate procs from generates file
+      this.procs = window['__sqliteProcs'] || {};
+   }
 
   /**
    * Current active database.
@@ -23,6 +26,11 @@ export class WlSqliteService {
    * Regex for sqlite parameter
    */
   private paramRegex: RegExp = new RegExp('@\\w+', 'g');
+
+  /**
+ * Collection of registered stored procedures.
+ */
+  private procs: { [index: string]: string; };
 
   /**
    * Regex for select query.
@@ -61,8 +69,6 @@ export class WlSqliteService {
     let statement: string = window['__sqliteProcs'][procName];
     let paramList: any[] = [];
 
-    console.log('Proc: ' + procName + ' Statement: ' + statement);
-
     if (params && Object.keys(params).length > 0) {
       // prep parameter list
       paramList = this.prepParams(statement, params);
@@ -89,6 +95,52 @@ export class WlSqliteService {
       return data;
     });
   }
+
+  /**
+   * Execute batch of SQL statements.
+   *
+   * @param statements Object describing the query and how it should be processed.
+   * @returns SQLite promise.
+   */
+  public sqlBatch(statements: WlSqliteObject[] | string[]): Promise<any> {
+    const queries: any[] = [];
+
+    for (const item of statements) {
+        let query: string;
+        let params: any[];
+
+        if (!item) {
+            // query not found
+            continue;
+        }
+
+        // inline SQL or no params
+        if (isString(item)) {
+            query = this.procs[String(item)] || String(item);
+            queries.push(query);
+            continue;
+        }
+
+        // object describing the query
+        if (isObject(item)) {
+            query = this.procs[Object(item).procName] || Object(item).query;
+            // convert query / params
+            params = this.prepParams(query, Object(item).params);
+        }
+
+        if (!query) {
+            throw new Error(`Expected query, but received '${query}'!`);
+        }
+
+        // add in SQLite format
+        queries.push([query, params]);
+    }
+
+    return this.db.sqlBatch(queries)
+        .catch(error => {
+            console.error(error);
+        });
+}
 
   /**
    * Prep the parameter list by matching the named parameters in

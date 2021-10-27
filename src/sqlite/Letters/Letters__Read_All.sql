@@ -1,0 +1,4 @@
+SELECT
+  LetterCombo
+FROM
+  Letters

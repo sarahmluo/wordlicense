@@ -1,0 +1,4 @@
+SELECT
+  Word
+FROM
+  Words

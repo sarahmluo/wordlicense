@@ -10,7 +10,8 @@ export interface WlSQLiteDB {
  * Interface for proc with parameters.
  */
 export interface WlSqliteObject {
-  procName: string;
+  query?: string;
+  procName?: string;
   params?: WlSQLiteParameters;
 }
 
