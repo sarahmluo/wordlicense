@@ -22,25 +22,54 @@
               obtain a corresponding list of words.
             </div>
             <div class="word-input-container">
-              <form #form="ngForm" (ngSubmit)="onLetterSubmit()">
-                <input [(ngModel)]="letterInput" (ngModelChange)="clearWordList()" type="text" id="letterInput"
-                  name="letterInput" class="word-input" />
-                <ion-button class="word-go-button" type="submit" size="small" shape="round" color="primary">Go</ion-button>
+              <form #f="ngForm" (ngSubmit)="onLetterSubmit()">
+                <ion-input
+                  [(ngModel)]="letterInput"
+                  (ngModelChange)="clearWordList()"
+                  type="text"
+                  id="letterInput"
+                  name="letterInput"
+                  class="word-input"
+                  minlength="3"
+                  maxlength="3"
+                  required
+                  #letterCtrl="ngModel">
+                </ion-input>
+                  <ion-label *ngIf="!letterCtrl.valid && letterCtrl.touched">
+                    Please enter three letters.
+                  </ion-label>
+                <ion-button
+                  class="word-go-button"
+                  type="submit"
+                  size="small"
+                  shape="round"
+                  color="primary"
+                  [disabled]="!f.valid">Go</ion-button>
               </form>
             </div>
           </ion-card-content>
         </ion-card>
 
-        <ion-card *ngIf="wordList.length && letterInput; else emptyList">
-          <ion-item *ngFor="let item of wordList">
-            <ion-label>{{item}}</ion-label>
-          </ion-item>
-        </ion-card>
+        <div *ngIf="wordList.length && letterInput; else emptyList">
+          <ion-card>
+            <ion-item lines="none">
+              <ion-label>
+                Results: {{ wordList.length }}
+              </ion-label>
+            </ion-item>
+          </ion-card>
+
+          <ion-card>
+            <ion-item *ngFor="let item of wordList">
+              <ion-label>{{item}}</ion-label>
+            </ion-item>
+          </ion-card>
+        </div>
 
         <ng-template #emptyList>
-          <ion-card *ngIf="!firstEntry && letterInput && showMsg">
+          <ion-card *ngIf="!wordList.length && letterInput && showMsg">
             <ion-card-content class="ion-text-center">
-              We don't have any words for those letters <br />
+              {{ resMsg }} <br />
               <ion-icon class="word-sad-icon" color="primary" name="sad"></ion-icon>
             </ion-card-content>
           </ion-card>

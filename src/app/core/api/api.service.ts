@@ -2,10 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { WLHttpParams } from './types';
+
 @Injectable({
   providedIn: 'root',
 })
-export class ApiService {
+export class WlApiService {
   constructor( private http: HttpClient) {}
 
   /**
@@ -16,7 +18,7 @@ export class ApiService {
   /**
    * Get method.
    */
-  public get(route: string, params?: any): Observable<any> {
-    return this.http.get(this.baseUrl + route, params);
+  public get(route: string, params?: WLHttpParams): Observable<any> {
+    return this.http.get(this.baseUrl + route, { params: params });
   }
 }

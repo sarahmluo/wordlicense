@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { WlApiService } from './api.service';
+import { WlAlertService } from './alert.service';
 
-describe('ApiService', () => {
-  let service: WlApiService;
+describe('AlertService', () => {
+  let service: WlAlertService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(WlApiService);
+    service = TestBed.inject(WlAlertService);
   });
 
   it('should be created', () => {

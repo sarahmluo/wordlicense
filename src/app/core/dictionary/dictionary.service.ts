@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ApiService } from '../api/api.service';
+import { WlApiService } from '../api/api.service';
 import { WlSqliteService } from '../sqlite/sqlite.service';
 import { WlSqliteObject } from '../sqlite/types';
 import { LetterList, WordList } from './types';
@@ -11,7 +11,7 @@ import { LetterList, WordList } from './types';
 })
 export class DictionaryService {
   constructor(
-    private api: ApiService,
+    private api: WlApiService,
     private http: HttpClient,
     private sqlite: WlSqliteService
   ) { }
@@ -44,7 +44,12 @@ export class DictionaryService {
    * Getter for the letter list.
    */
   public get letters(): string[] {
-    return [...this._letters];
+    if(this._letters) {
+      return [...this._letters];
+    }
+    else {
+      return [];
+    }
   }
 
   /**
