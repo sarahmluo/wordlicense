@@ -1,10 +1,11 @@
 import { Component, enableProdMode } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Platform } from '@ionic/angular';
+import { LoadingController, Platform } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 
-import { ApiService } from './core/api/api.service';
+import { WlAlertService } from './core/alert/alert.service';
+import { WlApiService } from './core/api/api.service';
 import { DictionaryService } from './core/dictionary/dictionary.service';
 import { WlSqliteService } from './core/sqlite/sqlite.service';
 
@@ -13,28 +14,39 @@ import { WlSqliteService } from './core/sqlite/sqlite.service';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+
   constructor(
-    private api: ApiService,
+    private api: WlApiService,
     private dictionary: DictionaryService,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private sqlite: WlSqliteService,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private loadingCtrl: LoadingController,
+    private alert: WlAlertService
   ) {
     this.initializeApp();
   }
 
- public initializeApp(): Promise<void> {
+ public async initializeApp(): Promise<void> {
 
-  let initialInstall: boolean = false;
+    let initialInstall: boolean = false;
+    let isOnline: boolean = navigator.onLine;
 
-  if (environment.production) {
-    enableProdMode();
-    this.api.baseUrl = `https://safeview-mobile.wentinc.com/${this.api.baseUrl}`;
-  } else {
-    //this.api.baseUrl = `https://10.80.83.122:44309/${this.api.baseUrl}`;
-    this.api.baseUrl = `https://192.168.31.185:44309/${this.api.baseUrl}`;
-  }
+    if (environment.production) {
+      enableProdMode();
+      this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
+    } else {
+      //this.api.baseUrl = `https://10.80.83.122:44309/${this.api.baseUrl}`;
+      //this.api.baseUrl = `https://192.168.31.185:44309/${this.api.baseUrl}`;
+      this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
+    }
+
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading Dictionary...',
+    })
+
+    await loading.present();
 
     return this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -43,8 +55,7 @@ export class AppComponent {
       // open database
       // create tables
       // try to select from api, if no data,
-      // then assume fresh install, load full api and letter list
-      // otherwise, notify of any api updates (future feature)
+      // then assume fresh install, load data via api
 
       return this.sqlite.openDatabase({
           name: 'UserScores',
@@ -65,10 +76,14 @@ export class AppComponent {
       })
       .then((res: any[]) => {
         // populate local db
-        console.log('populating db');
         if (res.length === 0){
-          console.log('initial install');
           initialInstall = true;
+
+          if(!isOnline) {
+            this.alert.error('No internet');
+            throw new Error('Internet connectivity required for first use');
+          }
+
           return this.dictionary.loadAllWords()
           .then(() => {
             return this.dictionary.saveAllWords();
@@ -82,9 +97,7 @@ export class AppComponent {
         }
       })
       .then(() => {
-        console.log('checking not initial install');
         if(!initialInstall) {
-          console.log('not initial install');
           return this.dictionary.loadAllWordsLocal()
           .then(() => {
             return this.dictionary.loadLetterListLocal();
@@ -92,9 +105,13 @@ export class AppComponent {
         }
       })
       .then(() => {
+        loading.dismiss();
         console.log("end of promise chain");
       })
       .catch(err => {
+        loading.dismiss();
+
+        this.alert.error('There was an error on app startup. Check your Internet connection and try again');
         console.log('Error on app startup: ' + err.message);
       });
     });

@@ -30,7 +30,8 @@
         size="small"
         shape="round"
         color="primary"
-        (click)="startGame()">
+        (click)="startGame()"
+        [disabled]="disableStart">
         Start
       </ion-button>
     </p>
@@ -53,19 +54,24 @@
   </div>
 
   <div *ngIf="hasStarted" class="word-input-container">
-    <form #form="ngForm" (ngSubmit)="onWordSubmit()">
-      <input
+    <form #f="ngForm" (ngSubmit)="onWordSubmit()">
+      <ion-input
         [(ngModel)]="wordInput"
         type="text"
         id="wordInput"
         name="wordInput"
-        class="word-input"/>
+        class="word-input"
+        minlength="3"
+        required
+        #wordCtrl="ngModel">
+      </ion-input>
       <ion-button
         class="word-go-button"
         type="submit"
         size="small"
         shape="round"
-        color="primary">
+        color="primary"
+        [disabled]="!f.valid">
         Go
       </ion-button>
     </form>

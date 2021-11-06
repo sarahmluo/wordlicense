@@ -1,6 +1,7 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { WlAlertService } from 'src/app/core/alert/alert.service';
 import { DictionaryService } from 'src/app/core/dictionary/dictionary.service';
 import { WlSqliteService } from 'src/app/core/sqlite/sqlite.service';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
@@ -28,6 +29,7 @@ import { largeFontSize, minViewPortWidth, smallFontSize } from './types';
 export class LicensePlateComponent implements AfterViewInit {
   constructor(
     private alertCtrl: AlertController,
+    private alert: WlAlertService,
     private dictionary: DictionaryService,
     private navCtrl: NavController,
     private sqlite: WlSqliteService,
@@ -55,6 +57,11 @@ export class LicensePlateComponent implements AfterViewInit {
    * Array of three-letter combinations.
    */
   public letters: string[];
+
+  /**
+   * Set of words from the dictionary.
+   */
+  public words: Set<string>;
 
   /**
    * Index of current letter combination.
@@ -107,6 +114,16 @@ export class LicensePlateComponent implements AfterViewInit {
   public largeFontSize: number = largeFontSize;
 
   /**
+   * Flag indicating whether or not to enable the start button.
+   */
+  public disableStart: boolean = true;
+
+  /**
+   * State flag for animation.
+   */
+  public hadSuccess: string = 'false';
+
+  /**
    * Default initials for entering score.
    */
   private defaultInitials: string = 'AAA';
@@ -122,15 +139,21 @@ export class LicensePlateComponent implements AfterViewInit {
   private numLicensePlates: number = 15;
 
   /**
-   * State flag for animation.
-   */
-  private hadSuccess: string = 'false';
-
-  /**
    * On Init.
    */
   public ngOnInit(): void {
     this.viewPortWidth = window.innerWidth;
+
+    this.letters = this.dictionary.letters;
+    this.words = this.dictionary.dictionary;
+
+    if(!this.letters || this.letters.length === 0
+        || !this.words || this.words.size === 0) {
+          this.alert.warning('The dictionary was not loaded correctly. Please check your Internet connection and restart the app.')
+    }
+    else{
+      this.disableStart = false;
+    }
   }
 
   /**
@@ -150,7 +173,6 @@ export class LicensePlateComponent implements AfterViewInit {
       console.log(res);
     })
     this.hasStarted = true;
-    this.letters = this.dictionary.letters;
     this.numLetters = this.letters.length;
     this.attempts = 0;
     this.successes = 0;
@@ -220,7 +242,7 @@ export class LicensePlateComponent implements AfterViewInit {
     }
 
     // check if word is in dictionary.
-    if (!this.dictionary.dictionary.has(this.wordInput.trim().toLowerCase())) {
+    if (!this.words.has(this.wordInput.trim().toLowerCase())) {
       const tst: HTMLIonToastElement = await this.toast.create({
         message: 'That word is not in the dictionary!',
         duration: 2000,
