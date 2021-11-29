@@ -23,3 +23,8 @@
   1. Version number is updated in package.json and config.xml
   2. Api URL is pointing at prod location
   3. All changes are pushed and merged in GitHub
+
+# Generate aab
+
+  1. In platforms/android run ```gradlew bundle```
+    a. See here for more info: https://medium.com/swlh/generating-an-android-app-bundle-from-your-ionic-app-without-android-studio-5bc3acaf4528

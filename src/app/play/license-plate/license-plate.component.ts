@@ -13,11 +13,15 @@ import { largeFontSize, minViewPortWidth, smallFontSize } from './types';
   templateUrl: './license-plate.component.html',
   styleUrls: ['./license-plate.component.scss'],
   animations: [ trigger('successAnimation', [
+    state('false', style({
+      boxShadow: 'none',
+      fontWeight: 'normal'
+    })),
     state('true', style({
       boxShadow: 'none',
       fontWeight: 'normal'
     })),
-    transition('* => *', animate('1000ms linear', keyframes([
+    transition('false => true', animate('1000ms linear', keyframes([
       style({boxShadow: 'none', fontWeight: 'normal', offset: 0}),
       style({boxShadow: '0 0 20px #091c82', fontWeight: 'bold', offset: 0.25}),
       style({boxShadow: '0 0 20px #091c82', fontWeight: 'bold', offset: 0.5}),
@@ -184,7 +188,7 @@ export class LicensePlateComponent implements AfterViewInit {
    * Get a new license display.
    */
   public getNewLicenseDisplay(): void {
-    //this.hadSuccess = 'false';
+    this.hadSuccess = 'false';
     this.getNewLetters();
     this.getNewLicenseNumber();
     if (this.timer) {
@@ -262,8 +266,10 @@ export class LicensePlateComponent implements AfterViewInit {
     this.successes++;
     this.attempts++;
     this.wordInput = '';
-    this.hadSuccess = this.hadSuccess === 'true' ? 'false' : 'true';
-    this.getNewLicenseDisplay();
+    this.hadSuccess = 'true';
+    // set a delay here so Angular's change detection can detect
+    // the change in the hadSuccess flag for resetting the animation.
+    setTimeout(() => this.getNewLicenseDisplay(), 1000);
   }
 
   /**
