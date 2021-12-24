@@ -103,7 +103,7 @@ export class WordTimerComponent implements OnInit {
   /**
    * Run the timer.
    */
-  private runTimer(): void {
+  public runTimer(): void {
     this.timer = setTimeout(
       () => {
         this.timeRemaining -= 1000;

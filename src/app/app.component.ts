@@ -38,8 +38,8 @@ export class AppComponent {
       this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     } else {
       //this.api.baseUrl = `https://10.80.83.122:44309/${this.api.baseUrl}`;
-      //this.api.baseUrl = `https://192.168.31.185:44309/${this.api.baseUrl}`;
-      this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
+      this.api.baseUrl = `https://192.168.31.186:44309/${this.api.baseUrl}`;
+      //this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     }
 
     const loading = await this.loadingCtrl.create({

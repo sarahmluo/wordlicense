@@ -17,10 +17,38 @@
       <ion-col size="12" size-md="6" offset-md="3">
         <ion-card>
           <ion-card-content>
-            <app-license-plate></app-license-plate>
+            <app-license-plate (submitFlag) = onShowSubmit($event)></app-license-plate>
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <div class="word-submit-overlay" *ngIf="showSubmit">
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Submit Word
+        </ion-card-title>
+        <div class="word-submit-text"><strong>{{ wordInput }}</strong><br /> is not in the dictionary. Would you like to submit it?
+        </div>
+        <ion-button expand="full" shape="round" (click)="onSubmitYes()">Yes</ion-button>
+        <ion-button expand="full" shape="round" (click)="onSubmitNo()">No</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div class="word-submit-overlay" *ngIf="showThanks">
+    <ion-card>
+      <ion-card-content>
+        <ion-card-title>
+          Thanks!
+        </ion-card-title>
+        <div class="word-submit-text">We'll review your word. If it checks out, it will be added to the
+          dictionary within the next day or two. You will need to sync the dictionary to pick up the change.
+        </div>
+        <ion-button expand="full" shape="round" (click)="onCloseThanks()">Ok</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 </ion-content>

@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { WordCommonModule } from '../word-common/word-common.module';
 import { LicensePlateComponent } from './license-plate/license-plate.component';
+import { SubmitWordModalComponent } from './license-plate/submit-word-modal/submit-word-modal.component';
 import { PlayPage } from './play.page';
 
 const routes: Routes = [
@@ -23,6 +24,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     WordCommonModule
   ],
-  declarations: [PlayPage, LicensePlateComponent]
+  declarations: [PlayPage, LicensePlateComponent, SubmitWordModalComponent]
 })
 export class PlayPageModule {}
