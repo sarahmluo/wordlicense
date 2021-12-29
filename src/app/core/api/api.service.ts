@@ -26,6 +26,6 @@ export class WlApiService {
    * Post method.
    */
   public post(route: string, body: any, params?: WLHttpParams): Observable<any> {
-    return this.http.post(this.baseUrl + route, body);
+    return this.http.post(this.baseUrl + route, JSON.stringify(body));
   }
 }
