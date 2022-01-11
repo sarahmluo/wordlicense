@@ -1,12 +1,12 @@
 import { animate, keyframes, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
-import { AlertController, ModalController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { WlAlertService } from 'src/app/core/alert/alert.service';
 import { DictionaryService } from 'src/app/core/dictionary/dictionary.service';
+import { WlWord } from 'src/app/core/dictionary/types';
 import { WlSqliteService } from 'src/app/core/sqlite/sqlite.service';
 import { WordTimerComponent } from 'src/app/word-common/word-timer/word-timer.component';
 
-import { SubmitWordModalComponent } from './submit-word-modal/submit-word-modal.component';
 import { largeFontSize, minViewPortWidth, smallFontSize } from './types';
 
 @Component({
@@ -36,7 +36,6 @@ export class LicensePlateComponent implements AfterViewInit {
     private alertCtrl: AlertController,
     private alert: WlAlertService,
     private dictionary: DictionaryService,
-    private modalCtrl: ModalController,
     private navCtrl: NavController,
     private sqlite: WlSqliteService,
     private toast: ToastController
@@ -67,7 +66,7 @@ export class LicensePlateComponent implements AfterViewInit {
   /**
    * Set of words from the dictionary.
    */
-  public words: Set<string>;
+  public words: WlWord[];
 
   /**
    * Index of current letter combination.
@@ -129,6 +128,9 @@ export class LicensePlateComponent implements AfterViewInit {
    */
   public hadSuccess: string = 'false';
 
+  /**
+   * Event emitted when user enters a word.
+   */
   @Output()
   public submitFlag: EventEmitter<string> = new EventEmitter();
 
@@ -157,7 +159,7 @@ export class LicensePlateComponent implements AfterViewInit {
     this.words = this.dictionary.dictionary;
 
     if(!this.letters || this.letters.length === 0
-        || !this.words || this.words.size === 0) {
+        || !this.words || this.words.length === 0) {
           this.alert.warning('The dictionary was not loaded correctly. Please check your Internet connection and restart the app.')
     }
     else{
@@ -251,26 +253,13 @@ export class LicensePlateComponent implements AfterViewInit {
     }
 
     // check if word is in dictionary.
-    if (!this.words.has(this.wordInput.trim().toLowerCase())) {
+    if (!this.words.find(u => u.word === this.wordInput.trim().toLowerCase())) {
 
       this.timer.stopTimer();
       this.submitFlag.emit(this.wordInput);
 
       return Promise.resolve();
 
-      // const tst: HTMLIonToastElement = await this.toast.create({
-      //   message: 'That word is not in the dictionary!',
-      //   duration: 2000,
-      //   position: 'top',
-      //   buttons: [
-      //     {
-      //     text: 'Close',
-      //     role: 'cancel'
-      //     }
-      //   ]
-      // });
-
-      // return tst.present();
     }
 
     // Passed checks update score.

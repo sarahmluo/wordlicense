@@ -1,4 +1,5 @@
 SELECT
-  Word
+  ServerId
+  ,Word
 FROM
   Words

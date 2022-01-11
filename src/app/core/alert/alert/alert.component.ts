@@ -57,7 +57,7 @@ private add(alert: WlAlert): void {
  *
  * @param alert Alert to remove.
  */
-private remove(alert: WlAlert): void {
+public remove(alert: WlAlert): void {
     let index: number = this.alerts.indexOf(alert);
 
     if (index !== -1)  {

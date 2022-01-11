@@ -28,9 +28,13 @@
     <ion-card>
       <ion-card-content>
         <ion-card-title>
-          Submit Word
+          <strong>{{ wordInput }}</strong>
         </ion-card-title>
-        <div class="word-submit-text"><strong>{{ wordInput }}</strong><br /> is not in the dictionary. Would you like to submit it?
+        <div class="word-submit-text">
+          is not in the dictionary!
+          <br />
+          <br />
+          Would you like to submit it?
         </div>
         <ion-button expand="full" shape="round" (click)="onSubmitYes()">Yes</ion-button>
         <ion-button expand="full" shape="round" (click)="onSubmitNo()">No</ion-button>

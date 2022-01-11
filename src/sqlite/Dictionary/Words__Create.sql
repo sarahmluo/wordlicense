@@ -1,8 +1,10 @@
 insert into Words
 (
-  Word
+  ServerId
+  ,Word
 )
 values
 (
-  @word
+  @serverId
+  ,@word
 )

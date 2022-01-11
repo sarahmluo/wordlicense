@@ -2,6 +2,7 @@ import { Component, enableProdMode } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { LoadingController, Platform } from '@ionic/angular';
+import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
 import { WlAlertService } from './core/alert/alert.service';
@@ -37,8 +38,8 @@ export class AppComponent {
       enableProdMode();
       this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     } else {
-      //this.api.baseUrl = `https://10.80.83.122:44309/${this.api.baseUrl}`;
       this.api.baseUrl = `https://192.168.31.186:44309/${this.api.baseUrl}`;
+      //this.api.baseUrl = `https://wordapi20211030215150-test.azurewebsites.net/${this.api.baseUrl}`;
       //this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     }
 
@@ -66,7 +67,8 @@ export class AppComponent {
         return this.sqlite.sqlBatch([
           'Score__Table',
           'Words__Table',
-          'Letters__Table'
+          'Letters__Table',
+          'Sync__Table'
         ]);
       })
       .then(() => {
@@ -93,6 +95,14 @@ export class AppComponent {
           })
           .then(() => {
             return this.dictionary.saveLetterList()
+          })
+          .then(() => {
+            return this.sqlite.executeSQL({
+              procName: 'Sync__Create',
+              params: {
+                syncDate: moment().format()
+              }
+            })
           });
         }
       })

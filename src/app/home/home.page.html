@@ -30,4 +30,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-button color="primary" shape="round" (click)="syncDictionary()">
+      Sync Dictionary <ion-icon name="sync" slot="start"></ion-icon>
+    </ion-button>
+  </ion-fab>
 </ion-content>

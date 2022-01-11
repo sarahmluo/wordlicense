@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { WlApiService } from '../api/api.service';
 import { WlSqliteService } from '../sqlite/sqlite.service';
 import { WlSqliteObject } from '../sqlite/types';
-import { LetterList, WordList } from './types';
+import { LetterList, WlWord, WordList } from './types';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class DictionaryService {
   /**
    * Internal dictionary object.
    */
-  private _dictionary: Set<string>;
+  private _dictionary: WlWord[];
 
   /**
    * List of letter strings to be used in the
@@ -36,8 +36,8 @@ export class DictionaryService {
   /**
    * Getter for dictionary.
    */
-  public get dictionary(): Set<string> {
-    return new Set(this._dictionary);
+  public get dictionary(): WlWord[] {
+    return [...this._dictionary];
   }
 
   /**
@@ -65,8 +65,8 @@ export class DictionaryService {
   public loadAllWords(): Promise<void> {
     return this.api.get('allwords')
       .toPromise()
-      .then((data: string[]) => {
-        this._dictionary = new Set(Object.values(data));
+      .then((data: WlWord[]) => {
+        this._dictionary = Object.values(data);
       });
   }
 
@@ -74,14 +74,14 @@ export class DictionaryService {
    * Load all words from sqlite db into runtime memory.
    */
   public loadAllWordsLocal(): Promise<void>{
-    this._dictionary = new Set();
+    this._dictionary = [];
 
     return this.sqlite.executeSQL({
       procName: 'Words__Read_All'
     })
-    .then((data: LetterList[]) => {
+    .then((data: WlWord[]) => {
       data.forEach(datum =>
-        this._dictionary.add(Object.values(datum)[0])
+        this._dictionary.push(Object.values(datum)[0])
       );
     });
   }
@@ -92,11 +92,12 @@ export class DictionaryService {
   public saveAllWords(): Promise<void> {
     let queries: WlSqliteObject[] = [];
 
-    this._dictionary.forEach(word =>
+    this._dictionary.forEach(entry =>
       queries.push({
         procName: 'Words__Create',
         params: {
-          word: word
+          serverId: entry.serverId,
+          word: entry.word
         }
       })
     );
