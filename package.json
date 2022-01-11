@@ -67,7 +67,6 @@
     "cryptiles": ">=4.1.2",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-util": "^3.0.8",
     "hoek": ">=4.2.1",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
