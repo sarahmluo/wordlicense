@@ -21,10 +21,19 @@ export class PlayPage {
   @ViewChild(LicensePlateComponent)
   public license: LicensePlateComponent;
 
+  /**
+   * Flag indicating to show submit screen.
+   */
   public showSubmit: boolean = false;
 
+  /**
+   * Flag indicating to show thank you screen.
+   */
   public showThanks: boolean = false;
 
+  /**
+   * Word input from user.
+   */
   public wordInput: string;
 
   /**

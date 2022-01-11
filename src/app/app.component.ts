@@ -2,6 +2,7 @@ import { Component, enableProdMode } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { LoadingController, Platform } from '@ionic/angular';
+import * as moment from 'moment';
 import { environment } from 'src/environments/environment';
 
 import { WlAlertService } from './core/alert/alert.service';
@@ -99,7 +100,7 @@ export class AppComponent {
             return this.sqlite.executeSQL({
               procName: 'Sync__Create',
               params: {
-                syncDate: (new Date()).getDate()
+                syncDate: moment().format()
               }
             })
           });

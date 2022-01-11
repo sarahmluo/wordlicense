@@ -1,5 +1,5 @@
 create table if not exists Sync
 (
   SyncId INTEGER
-  ,LastSyncDate DATETIME
+  ,LastSyncDate TEXT
 )

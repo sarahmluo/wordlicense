@@ -12,3 +12,11 @@ export interface WordList {
 export interface LetterList {
   [key: string]: string;
 }
+
+/**
+ * Word with server id.
+ */
+export interface WlWord {
+  serverId: number,
+  word: string
+}

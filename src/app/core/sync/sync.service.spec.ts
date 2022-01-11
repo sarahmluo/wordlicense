@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SyncService } from './sync.service';
+import { WlSyncService } from './sync.service';
 
 describe('SyncService', () => {
-  let service: SyncService;
+  let service: WlSyncService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SyncService);
+    service = TestBed.inject(WlSyncService);
   });
 
   it('should be created', () => {
