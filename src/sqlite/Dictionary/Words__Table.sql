@@ -1,6 +1,6 @@
 create table if not exists Words
 (
-  WordId INTEGER
+  WordId INTEGER PRIMARY KEY
   ,ServerId INTEGER
   ,Word TEXT
 )

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 import { WlAlertService } from '../alert/alert.service';
 import { WlApiService } from '../api/api.service';
@@ -23,11 +24,17 @@ export class WlSyncService {
       procName: 'Sync__Read'
     });
 
-    const data = await this.api.get('sync', { clientSyncDate: syncDate[0].LastSyncDate }).toPromise();
+    const data = await this.api.get('sync', { clientSyncDate: syncDate[0].LastSyncDate })
+                       .toPromise()
+                       .catch(err => {
+                         this.alert.error('There was a problem syncing the dictionary. Check your Internet connection and try again.');
+                         console.log('Error syncing dictionary:' + err.message);
+                       });
 
     const dataToSync: WlDictionaryEntry[] = data;
+
     if (dataToSync.length === 0) {
-      return Promise.resolve();
+      return this.updateSyncDate(syncDate[0].SyncId);
     }
 
     const syncPromises: Promise<any>[] = [];
@@ -69,16 +76,24 @@ export class WlSyncService {
 
     return Promise.all(syncPromises)
     .then(() => {
-      return this.sqlite.executeSQL({
-        procName: 'Sync__Update',
-        params: {
-          syncDate: syncDate[0].LastSyncDate,
-          syncId: syncDate[0].SyncId
-        }
-      });
+      return this.updateSyncDate(syncDate[0].SyncId);
     })
     .catch(err => {
-      this.alert.error('There was an error syncing the dictionary: ' + err.message);
+      this.alert.error('There was a problem syncing the dictionary. Check your Internet connection and try again.');
+      console.log('Error syncing dictionary:' + err.message);
+    });
+  }
+
+  /**
+   * Update the sync date.
+   */
+  private updateSyncDate(syncId: number): Promise<void | number | any[]> {
+    return this.sqlite.executeSQL({
+      procName: 'Sync__Update',
+      params: {
+        syncDate: moment().format(),
+        syncId: syncId
+      }
     });
   }
 }

@@ -32,15 +32,14 @@ export class AppComponent {
  public async initializeApp(): Promise<void> {
 
     let initialInstall: boolean = false;
-    let isOnline: boolean = navigator.onLine;
 
     if (environment.production) {
       enableProdMode();
       this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     } else {
-      this.api.baseUrl = `https://192.168.31.186:44309/${this.api.baseUrl}`;
+      //this.api.baseUrl = `https://192.168.31.186:44309/${this.api.baseUrl}`;
       //this.api.baseUrl = `https://wordapi20211030215150-test.azurewebsites.net/${this.api.baseUrl}`;
-      //this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
+      this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     }
 
     const loading = await this.loadingCtrl.create({
@@ -81,11 +80,6 @@ export class AppComponent {
         if (res.length === 0){
           initialInstall = true;
 
-          if(!isOnline) {
-            this.alert.error('No internet');
-            throw new Error('Internet connectivity required for first use');
-          }
-
           return this.dictionary.loadAllWords()
           .then(() => {
             return this.dictionary.saveAllWords();
@@ -121,7 +115,7 @@ export class AppComponent {
       .catch(err => {
         loading.dismiss();
 
-        this.alert.error('There was an error on app startup. Check your Internet connection and try again');
+        this.alert.error('There was an error on app startup. Check your Internet connection and try again.');
         console.log('Error on app startup: ' + err.message);
       });
     });

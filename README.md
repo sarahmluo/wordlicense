@@ -22,7 +22,8 @@
 
   1. Version number is updated in package.json and config.xml
   2. Api URL is pointing at prod location
-  3. All changes are pushed and merged in GitHub
+  3. Sourcemap generation is turned off
+  4. All changes are pushed and merged in GitHub
 
 # Generate aab
 

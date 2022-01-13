@@ -6,5 +6,5 @@ export interface WlDictionaryEntry {
   word: string,
   createDate: Date,
   updateDate: Date
-  deleteDate: Date,
+  deleteDate: Date
 }
