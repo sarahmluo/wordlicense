@@ -1,4 +1,10 @@
 <ion-app>
   <wl-alert></wl-alert>
+  <wl-progress
+    *ngIf="showProgress"
+    [titleText]="progressTitle"
+    [progressText]="progressText"
+    [progressValue]="progressValue"
+  ></wl-progress>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

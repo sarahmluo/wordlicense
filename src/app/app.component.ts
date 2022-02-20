@@ -16,6 +16,27 @@ import { WlSqliteService } from './core/sqlite/sqlite.service';
 })
 export class AppComponent {
 
+  /**
+   * Progress message when loading data.
+   */
+  public progressText: string = "";
+
+  /**
+   * Title for progress indicator.
+   */
+  public progressTitle: string = "";
+
+  /**
+   * Value representing loading progress.
+   */
+  public progressValue: number = 0.0;
+
+  /**
+   * Flag indicating whether or not to show
+   * the progress indicator.
+   */
+  public showProgress: boolean = false;
+
   constructor(
     private api: WlApiService,
     private dictionary: DictionaryService,
@@ -42,21 +63,19 @@ export class AppComponent {
       this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     }
 
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading Dictionary...',
-    })
-
-    await loading.present();
+    this.showProgress = true;
+    this.progressText = "Initializing...";
 
     return this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
 
-      // open database
-      // create tables
-      // try to select from api, if no data,
-      // then assume fresh install, load data via api
+    // open database
+    // create tables
+    // try to select from local db, if no data,
+    // then assume fresh install, load data via api
 
+    this.progressText = "Preparing Database...";
       return this.sqlite.openDatabase({
           name: 'UserScores',
           location: 'default'
@@ -76,18 +95,27 @@ export class AppComponent {
         });
       })
       .then((res: any[]) => {
+        this.progressValue = 0.10;
         // populate local db
         if (res.length === 0){
           initialInstall = true;
+          console.log('intial install');
+          this.progressText = "Fetching Dictionary...";
 
           return this.dictionary.loadAllWords()
           .then(() => {
+            this.progressText = "Saving Dictionary...";
+            this.progressValue = 0.4;
             return this.dictionary.saveAllWords();
           })
           .then(() => {
+            this.progressText = "Fetching Letter List...";
+            this.progressValue = 0.6;
             return this.dictionary.loadLetterList();
           })
           .then(() => {
+            this.progressText = "Saving Letter List...";
+            this.progressValue = 0.9;
             return this.dictionary.saveLetterList()
           })
           .then(() => {
@@ -102,19 +130,21 @@ export class AppComponent {
       })
       .then(() => {
         if(!initialInstall) {
+          this.progressText = "Loading Dictionary...";
           return this.dictionary.loadAllWordsLocal()
           .then(() => {
+            this.progressText = "Loading Letter List...";
+            this.progressValue = 0.50;
             return this.dictionary.loadLetterListLocal();
           });
         }
       })
       .then(() => {
-        loading.dismiss();
+        this.showProgress = false;
         console.log("end of promise chain");
       })
       .catch(err => {
-        loading.dismiss();
-
+        this.showProgress = false;
         this.alert.error('There was an error on app startup. Check your Internet connection and try again.');
         console.log('Error on app startup: ' + err.message);
       });

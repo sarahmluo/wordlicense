@@ -1,0 +1,21 @@
+:host {
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 9997 !important;
+}
+
+.progress-text {
+  margin: 10px 0;
+}
+
+.word-progress-card {
+  margin: auto;
+  padding-bottom: 20px;
+  top: 20%;
+  width: 300px;
+}
