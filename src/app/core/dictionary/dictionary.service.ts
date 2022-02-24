@@ -37,7 +37,12 @@ export class DictionaryService {
    * Getter for dictionary.
    */
   public get dictionary(): WlWord[] {
-    return [...this._dictionary];
+    if (this._dictionary) {
+      return [...this._dictionary];
+    }
+    else {
+      return [];
+    }
   }
 
   /**
