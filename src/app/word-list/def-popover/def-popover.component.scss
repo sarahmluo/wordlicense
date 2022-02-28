@@ -1,0 +1,22 @@
+h6 {
+  font-size: larger;
+  text-decoration: underline;
+}
+
+.word-definition-container {
+  overflow-y: scroll;
+  padding: 0 0 0 5px;
+}
+
+.word-definition-item {
+  margin-bottom: 10px;
+  --min-height: 0;
+}
+
+.word-speech-part {
+  font-style: italic;
+}
+
+.word-spinner {
+  margin: auto;
+}

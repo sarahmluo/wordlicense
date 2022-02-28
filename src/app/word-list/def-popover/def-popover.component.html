@@ -1,0 +1,14 @@
+  <ion-spinner *ngIf="isLoading" color="primary" class="word-spinner"></ion-spinner>
+  <div *ngIf=!isLoading class="word-definition-container">
+    <h6>{{ word }}</h6>
+        <div *ngFor="let item of fullDefinition.meanings">
+          <div class="word-speech-part">{{ item.partOfSpeech }}</div>
+          <div>
+            <ion-list lines="none">
+              <ion-item *ngFor="let def of item.definitions, let i = index" class="word-definition-item">
+               {{ i + 1 }}. {{ def.definition }}
+              </ion-item>
+            </ion-list>
+          </div>
+        </div>
+  </div>

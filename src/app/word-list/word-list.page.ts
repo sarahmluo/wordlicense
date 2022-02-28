@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, PopoverController } from '@ionic/angular';
 
 import { WlSqliteService } from '../core/sqlite/sqlite.service';
+import { DefPopoverComponent } from './def-popover/def-popover.component';
 
 @Component({
   selector: 'app-word-list',
@@ -13,6 +14,7 @@ export class WordListPage implements OnInit {
     private loadingCtrl: LoadingController,
     private navCtrl: NavController,
     private sqlite: WlSqliteService,
+    private popoverController: PopoverController
   ) { }
 
   /**
@@ -79,21 +81,6 @@ export class WordListPage implements OnInit {
       this.showMsg = true;
       loading.dismiss();
     });
-
-    // return this.api.get('wordlist', { lettercombo: this.letterInput })
-    //         .toPromise()
-    //         .then((res: string[]) => {
-    //           this.wordList = res;
-    //           if (!this.wordList.length) {
-    //             this.resMsg = 'We don\'t have any words for those letters';
-    //             this.showMsg = true;
-    //           }
-    //         })
-    //         .catch(err => {
-    //           console.log(err.message);
-    //           this.resMsg = 'There was an error retrieving the word list. Please check your internet connection and try again.';
-    //           this.showMsg = true;
-    //         });
   }
 
   /**
@@ -105,6 +92,22 @@ export class WordListPage implements OnInit {
     if (this.letterInput.length == 0) {
       this.wordList = [];
     }
+  }
+
+  /**
+   * Show definition popover.
+   */
+  public async showDefinition(event, word: string) {
+    const popover = await this.popoverController.create({
+      component: DefPopoverComponent,
+      backdropDismiss: true,
+      componentProps: {
+        "word": word
+      },
+      cssClass : 'word-list-popover'
+    });
+
+    await popover.present();
   }
 
 }

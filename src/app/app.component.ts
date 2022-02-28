@@ -55,7 +55,6 @@ export class AppComponent {
     let initialInstall: boolean = false;
 
     if (environment.production) {
-      enableProdMode();
       this.api.baseUrl = `https://wordapi20211030215150.azurewebsites.net/${this.api.baseUrl}`;
     } else {
       //this.api.baseUrl = `https://192.168.31.186:44309/${this.api.baseUrl}`;

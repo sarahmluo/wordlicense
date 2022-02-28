@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Routes, RouterModule } from '@angular/router';
-
+import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
+import { DefPopoverComponent } from './def-popover/def-popover.component';
 import { WordListPage } from './word-list.page';
 
 const routes: Routes = [
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WordListPage]
+  declarations: [WordListPage, DefPopoverComponent]
 })
 export class WordListPageModule {}

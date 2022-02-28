@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
 
 import { WlApiService } from '../api/api.service';
 import { WlSqliteService } from '../sqlite/sqlite.service';
