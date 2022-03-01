@@ -1,6 +1,7 @@
   <ion-spinner *ngIf="isLoading" color="primary" class="word-spinner"></ion-spinner>
   <div *ngIf=!isLoading class="word-definition-container">
     <h6>{{ word }}</h6>
+      <ng-container *ngIf="!showEmptyDef; else emptyDef">
         <div *ngFor="let item of fullDefinition.meanings">
           <div class="word-speech-part">{{ item.partOfSpeech }}</div>
           <div>
@@ -11,4 +12,13 @@
             </ion-list>
           </div>
         </div>
+      </ng-container>
+      <ng-template #emptyDef>
+        <div class="ion-text-center">
+          Sorry, we don't have a definition for this word.
+          <p>
+            <ion-icon name="sad" color="primary" class="word-sad-icon"></ion-icon>
+          </p>
+        </div>
+      </ng-template>
   </div>
