@@ -45,6 +45,8 @@ ion-card {
 }
 
 .word-list-popover .popover-content {
+  border: 7px solid var(--ion-color-primary);
+  border-radius: 20px;
   height: 75%;
   padding: 5px;
   top: 8%;
