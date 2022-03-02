@@ -2,8 +2,5 @@
   "name": "new",
   "integrations": {
     "cordova": {}
-  },
-  "hooks": {
-    "build:after": "./attach-source-maps.js"
   }
 }
