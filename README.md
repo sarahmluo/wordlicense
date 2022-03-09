@@ -29,3 +29,4 @@
 
   1. In platforms/android run ```gradlew bundle```
     a. See here for more info: https://medium.com/swlh/generating-an-android-app-bundle-from-your-ionic-app-without-android-studio-5bc3acaf4528
+  2. Sign the aab (see above link)
